@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace MusicShop.Views
 {
-	/// <summary>
-	/// Логика взаимодействия для ClientWindow.xaml
-	/// </summary>
 	public partial class ClientWindow : Window
 	{
 		public ClientWindow()
