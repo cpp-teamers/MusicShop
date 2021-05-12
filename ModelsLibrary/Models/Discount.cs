@@ -8,6 +8,7 @@ namespace ModelsLibrary.Models
 	[Table("Discounts")]
     public class Discount
     {
+        [Key]
         public int Id { get; set; }
         [DataType(DataType.DateTime)]
         [Required]

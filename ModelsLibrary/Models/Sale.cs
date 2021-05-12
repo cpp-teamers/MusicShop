@@ -12,6 +12,7 @@ namespace ModelsLibrary.Models
     [Table("Sales")]
     public class Sale
     {
+        [Key]
         public int Id { get; set; }
         public int PlateId { get; set; }
         public virtual Plate Plate { get; set; }

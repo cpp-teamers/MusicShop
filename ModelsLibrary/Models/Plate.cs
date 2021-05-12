@@ -8,6 +8,7 @@ namespace ModelsLibrary.Models
 	[Table("Plates")]
     public class Plate
     {
+        [Key]
         public int Id { get; set; }
         [StringLength(50)]
         [Required]

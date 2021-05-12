@@ -6,6 +6,7 @@ namespace ModelsLibrary.Models
 	[Table("Genres")]
     public class Genre
     {
+        [Key]
         public int Id { get; set; }
         [StringLength(50)]
         [Required]

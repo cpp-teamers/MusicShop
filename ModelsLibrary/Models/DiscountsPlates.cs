@@ -12,6 +12,7 @@ namespace ModelsLibrary.Models
     [Table("DiscountsPlates")]
     public class DiscountsPlates
     {
+        [Key]
         public int Id { get; set; }
         public int PlateId { get; set; }
         public virtual Plate Plate { get; set; }

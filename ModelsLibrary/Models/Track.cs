@@ -7,6 +7,7 @@ namespace ModelsLibrary.Models
 	[Table("Tracks")]
     public class Track
     {
+        [Key]
         public int Id { get; set; }
         [StringLength(50)]
         [Required]

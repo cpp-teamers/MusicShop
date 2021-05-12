@@ -6,6 +6,7 @@ namespace ModelsLibrary.Models
 	[Table("Publishers")]
     public class Publisher
     {
+        [Key]
         public int Id { get; set; }
         [Required]
         [StringLength(50)]
