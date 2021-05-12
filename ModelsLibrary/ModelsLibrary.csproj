@@ -56,6 +56,10 @@
     <Compile Include="Migrations\202105120946330_FirstMigration.Designer.cs">
       <DependentUpon>202105120946330_FirstMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105121346010_PlateChanged.cs" />
+    <Compile Include="Migrations\202105121346010_PlateChanged.Designer.cs">
+      <DependentUpon>202105121346010_PlateChanged.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\DiscountsPlates.cs" />
@@ -74,6 +78,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202105120946330_FirstMigration.resx">
       <DependentUpon>202105120946330_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105121346010_PlateChanged.resx">
+      <DependentUpon>202105121346010_PlateChanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
