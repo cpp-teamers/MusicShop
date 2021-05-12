@@ -10,13 +10,20 @@ namespace ModelsLibrary.Models
     {
         [Key]
         public int Id { get; set; }
-        [DataType(DataType.DateTime)]
+
         [Required]
+        [DataType(DataType.DateTime)]
         public DateTime StartDate { get; set; }
-        [DataType(DataType.DateTime)]
+
         [Required]
+        [DataType(DataType.DateTime)]
         public DateTime EndDate { get; set; }
+
+        [Required]
+        [Column(TypeName = "int")]
         public int Percent { get; set; }
+
+        [Required]
         [StringLength(50)]
         public string Comment { get; set; }
         //-----------------------------------------------------------------------
