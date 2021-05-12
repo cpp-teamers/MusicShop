@@ -28,8 +28,9 @@ namespace ModelsLibrary.Models
         [Column(TypeName = "money")]
         public decimal Cost { get; set; }
 
-        [Column(TypeName = "image")]
-        public BitmapImage AlbumImage { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string AlbumImagePath { get; set; }
 
         [NotMapped]
         public decimal RealCost { get; set; }
