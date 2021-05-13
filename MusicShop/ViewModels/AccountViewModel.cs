@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MusicShop.ViewModels
 {
-    public class DiscountPlateViewModel : INotifyPropertyChanged
+    public class AccountViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
