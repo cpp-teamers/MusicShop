@@ -62,7 +62,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Author.cs" />
-    <Compile Include="Models\DiscountsPlates.cs" />
     <Compile Include="Models\Discount.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Plate.cs" />
