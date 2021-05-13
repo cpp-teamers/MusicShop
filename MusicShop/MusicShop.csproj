@@ -56,12 +56,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\AuthorViewModel.cs" />
-    <Compile Include="ViewModels\DiscountPlateViewModel.cs" />
     <Compile Include="ViewModels\DiscountViewModel.cs" />
     <Compile Include="ViewModels\GenreViewModel.cs" />
     <Compile Include="ViewModels\PlateViewModel.cs" />
     <Compile Include="ViewModels\PublisherViewModel.cs" />
+    <Compile Include="ViewModels\RoleViewModel.cs" />
     <Compile Include="ViewModels\SaleViewModel.cs" />
     <Compile Include="ViewModels\TrackViewModel.cs" />
     <Compile Include="Views\AdminWindow.xaml.cs">

@@ -60,12 +60,18 @@
     <Compile Include="Migrations\202105121346010_PlateChanged.Designer.cs">
       <DependentUpon>202105121346010_PlateChanged.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105131522388_AccountRoleAdded.cs" />
+    <Compile Include="Migrations\202105131522388_AccountRoleAdded.Designer.cs">
+      <DependentUpon>202105131522388_AccountRoleAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Discount.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Plate.cs" />
     <Compile Include="Models\Publisher.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,6 +86,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105121346010_PlateChanged.resx">
       <DependentUpon>202105121346010_PlateChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105131522388_AccountRoleAdded.resx">
+      <DependentUpon>202105131522388_AccountRoleAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

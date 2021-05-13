@@ -18,11 +18,11 @@ namespace ModelsLibrary.Models
         [ForeignKey("Plate")]
         public int PlateId { get; set; }
         public virtual Plate Plate { get; set; }
-        
+
         [Required]
         [Column(TypeName = "int")]
         public int AmountOfSales { get; set; }
-        
+
         [Required]
         [DataType(DataType.Date)]
         public DateTime DateOfSale { get; set; }
@@ -30,5 +30,9 @@ namespace ModelsLibrary.Models
         [Required]
         [Column(TypeName = "money")]
         public decimal Price { get; set; } // changed name of the field
+
+        [ForeignKey("Account")]
+        public int AccountId { get; set; }
+        public virtual Account Account { get; set; }
     }
 }
