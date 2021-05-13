@@ -27,6 +27,6 @@ namespace ModelsLibrary.Models
         [StringLength(50)]
         public string Comment { get; set; }
         //-----------------------------------------------------------------------
-        public virtual IEnumerable<DiscountsPlates> DiscountsPlates { get; set; }
+        public virtual IEnumerable<Plate> Plates { get; set; }
     }
 }
