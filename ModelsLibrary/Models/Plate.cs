@@ -48,6 +48,6 @@ namespace ModelsLibrary.Models
         public int GenreId { get; set; }
         public virtual Genre Genre { get; set; }
         //---------------------------------------------
-        public virtual IEnumerable<DiscountsPlates> DiscountsPlates { get; set; }
+        public virtual IEnumerable<Discount> Discounts { get; set; }
     }
 }
