@@ -117,5 +117,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pictures\Icons\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\tel1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\dia.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
