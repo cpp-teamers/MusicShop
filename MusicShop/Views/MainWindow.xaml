@@ -5,8 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicShop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Authorization" 
+        Height="450" 
+        Width="800" 
+        Icon="../Pictures/Icons/loginIco.ico">
+    <Window.Background>
+        <ImageBrush ImageSource="../Pictures/Images/background.jpg" />
+    </Window.Background>
+
     <Grid>
-        <TextBox Text="MAIN window"/>
+        <StackPanel x:Name="LoginRegButtonPanel" Visibility="Hidden" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Style="{DynamicResource RoundButton}" x:Name="loginButton" Content="Login"/>
+            <Button Style="{DynamicResource RoundButton}" x:Name="registerButton" Content="I've got no account yet. Register" />
+        </StackPanel>
+
+        <DockPanel x:Name="LoginPanel" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <TextBox x:Name="loginField" MouseLeave="loginField_MouseLeave" DockPanel.Dock="Top" >
+                
+            </TextBox>
+            <PasswordBox x:Name="passField" MouseLeave="passField_MouseLeave" DockPanel.Dock="Top">
+                
+            </PasswordBox>
+            <TextBox x:Name="emailField" MouseLeave="emailField_MouseLeave" DockPanel.Dock="Top">
+                
+            </TextBox>
+            <TextBox x:Name="phoneField" MouseLeave="phoneField_MouseLeave" IsMouseCapturedChanged="phoneField_IsMouseCapturedChanged" DockPanel.Dock="Top" >
+                
+            </TextBox>
+        </DockPanel>
+
     </Grid>
 </Window>
