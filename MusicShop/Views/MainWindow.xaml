@@ -4,34 +4,84 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicShop"
+        xmlns:vm1="clr-namespace:MusicShop.ViewModels;assembly=BizLibrary"
         mc:Ignorable="d"
         Title="Authorization" 
         Height="450" 
         Width="800" 
-        Icon="../Pictures/Icons/loginIco.ico">
+        Icon="../Pictures/Icons/loginIco.ico" >
+
+    <Window.DataContext>
+        <vm1:AccountViewModel />
+    </Window.DataContext>
+    
     <Window.Background>
         <ImageBrush ImageSource="../Pictures/Images/background.jpg" />
     </Window.Background>
 
+    <Window.Resources>
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource PadsMrgs}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}" >
+                        
+                        <Grid>
+                            <Border x:Name="OuterBorder" BorderBrush="#5AFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+                                <Border x:Name="InnerBorder" Background="#FFFFFFFF" BorderBrush="#33000000" BorderThickness="1" CornerRadius="3,3,3,3">
+                                    <Grid>
+                                        <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHostd"/>
+                                    </Grid>
+                                </Border>
+                            </Border>
+                            
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Style="{StaticResource baseTextBoxFont}"  Content="{TemplateBinding Tag}" VerticalAlignment="Center"
+                           Visibility="Collapsed" Foreground="Gray" FontFamily="Arial"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
     <Grid>
-        <StackPanel x:Name="LoginRegButtonPanel" Visibility="Hidden" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel x:Name="LoginRegButtonPanel" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button Style="{DynamicResource RoundButton}" x:Name="loginButton" Content="Login"/>
             <Button Style="{DynamicResource RoundButton}" x:Name="registerButton" Content="I've got no account yet. Register" />
         </StackPanel>
 
         <DockPanel x:Name="LoginPanel" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center" >
-            <TextBox x:Name="loginField" MouseLeave="loginField_MouseLeave" DockPanel.Dock="Top" >
-                
+            <TextBox x:Name="loginField" 
+                     Style="{StaticResource MyWaterMarkStyle}" 
+                     Tag="{Binding DefaultAcc.Login}"
+                     DockPanel.Dock="Top" >
             </TextBox>
-            <PasswordBox x:Name="passField" MouseLeave="passField_MouseLeave" DockPanel.Dock="Top">
-                
-            </PasswordBox>
-            <TextBox x:Name="emailField" MouseLeave="emailField_MouseLeave" DockPanel.Dock="Top">
-                
+            <TextBox x:Name="passField" 
+                         Style="{StaticResource MyWaterMarkStyle}"
+                         Tag="{Binding DefaultAcc.Password}"
+                         DockPanel.Dock="Top">
             </TextBox>
-            <TextBox x:Name="phoneField" MouseLeave="phoneField_MouseLeave" IsMouseCapturedChanged="phoneField_IsMouseCapturedChanged" DockPanel.Dock="Top" >
-                
+            <TextBox x:Name="emailField" 
+                     Style="{StaticResource MyWaterMarkStyle}" 
+                     Tag="{Binding DefaultAcc.Email}"
+                     DockPanel.Dock="Top">
             </TextBox>
+            <TextBox x:Name="phoneField" 
+                     Style="{StaticResource MyWaterMarkStyle}" 
+                     Tag="{Binding DefaultAcc.Phone}"
+                     DockPanel.Dock="Top" >
+            </TextBox>
+
+            <Button DockPanel.Dock="Bottom"  Style="{StaticResource RoundButton}" Padding="10" Width="200" Content="Accept" Command="{Binding ExecRegistation}"/>
+
         </DockPanel>
 
     </Grid>
