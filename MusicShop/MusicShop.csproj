@@ -68,6 +68,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resourses\ButtonStyleSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resourses\TextBoxStyleSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AdminWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -108,13 +116,31 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pictures\Icons\" />
+    <Resource Include="Pictures\Images\background.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\Images\tel1.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\Images\dia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Icons\loginIco.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\Login.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\Password.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\Email.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\Phone.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\Phone.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
