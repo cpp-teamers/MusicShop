@@ -1,12 +1,54 @@
-﻿using System;
+﻿using BizLibrary.Repositories.Interfaces;
+using ModelsLibrary.EF;
+using ModelsLibrary.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BizLibrary.Repositories.Implementations
 {
-    class AccountRepository
+	class AccountRepository: IAccountRepository
     {
-    }
+		private ModelsManager _modelManager = new ModelsManager();
+
+		public void AddAccount(Account addedAccount)
+		{
+			_modelManager.Accounts.Add(addedAccount);
+
+			_modelManager.Entry(addedAccount).State = EntityState.Added;
+			_modelManager.SaveChanges();
+		}
+
+		public void ChangeAccount(Account changedAccount)
+		{
+			var foundToEdit = _modelManager.Accounts.Find(changedAccount.Id);
+			foundToEdit = changedAccount; // --question
+
+			_modelManager.Entry(foundToEdit).State = EntityState.Modified;
+			_modelManager.SaveChanges();
+		}
+
+		public void DelAccount(int accountId)
+		{
+			var foundToDel = _modelManager.Accounts.Find(accountId);
+
+			_modelManager.Entry(foundToDel).State = EntityState.Deleted;
+			_modelManager.Accounts.Remove(foundToDel);
+		}
+
+		public Account GetAccountById(int accountId)
+		{
+			return _modelManager.Accounts.Find(accountId);
+		}
+
+		public IEnumerable<Account> GetAllAccounts()
+		{
+			return _modelManager.Accounts;
+		}
+
+		public IEnumerable<Role> GetAllAccountsbyRoleId(int roleId)
+		{
+			throw new System.NotImplementedException();
+		}
+	}
 }
