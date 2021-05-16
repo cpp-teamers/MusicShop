@@ -12,21 +12,6 @@ namespace MusicShop.ViewModels
 {
     public class PublisherViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Publisher> Publishers { get; set; }
-        public PublisherViewModel()
-        {
-            Publishers = new ObservableCollection<Publisher>();
-        }
-        private Publisher _selectedPublisher;
-        public Publisher SelectedPublisher
-        {
-            get { return _selectedPublisher; }
-            set                 
-            {
-                _selectedPublisher = value;
-                OnPropertyChanged("SelectedPublisher");
-            }
-        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
