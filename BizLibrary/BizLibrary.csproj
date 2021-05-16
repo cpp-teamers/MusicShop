@@ -81,6 +81,10 @@
     <Compile Include="ViewModels\TrackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HashGenerators\HashGenerators.csproj">
+      <Project>{678562f3-9b78-4b48-a7b1-de24ac90e755}</Project>
+      <Name>HashGenerators</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModelsLibrary\ModelsLibrary.csproj">
       <Project>{37c84e76-e731-4799-8b10-dae6dfba2474}</Project>
       <Name>ModelsLibrary</Name>

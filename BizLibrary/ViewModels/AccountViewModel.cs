@@ -9,11 +9,15 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
 using HashGenerators;
+using BizLibrary.Repositories.Interfaces;
+using BizLibrary.Repositories.Implementations;
 
 namespace MusicShop.ViewModels
 {
 	public class AccountViewModel : INotifyPropertyChanged
     {
+        IAccountRepository _accountRepo = new AccountRepository();
+
         private Account _defaultAcc = new Account()
         {
             Login = "Login",
@@ -155,8 +159,7 @@ namespace MusicShop.ViewModels
                             Phone = ValidatePhone()
                         };
 
-                        //TODO account repo insert
-
+                        _accountRepo.AddAccount(newAcc);
                     }
                     catch (System.Exception err)
 					{
@@ -191,7 +194,7 @@ namespace MusicShop.ViewModels
 
         private string ValidatePassword()
         {
-            Regex regExp = new Regex(@"^(?=i)(?=.*[a-z])(?=.*[0-9])(?=.*[@#_])[a-z][a-z0-9@#_]{6,}[a-z0-9]$");
+            Regex regExp = new Regex(@"^(?=.*[A-Z])(?=.*\d)(?!.*(.)\1\1)[a-zA-Z0-9@]{6,12}$");
             if (!regExp.IsMatch(_password))
             {
                 throw new System.Exception("Password is invalid! Try again...");
