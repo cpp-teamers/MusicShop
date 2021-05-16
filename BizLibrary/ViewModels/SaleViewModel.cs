@@ -12,21 +12,6 @@ namespace MusicShop.ViewModels
 {
     public class SaleViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Sale> Sales { get; set; }
-        public SaleViewModel()
-        {
-            Sales = new ObservableCollection<Sale>();
-        }
-        private Sale _selectedSale;
-        public Sale SelectedSale
-        {
-            get { return _selectedSale; }
-            set
-            {
-                _selectedSale = value;
-                OnPropertyChanged("SelectedSale");
-            }
-        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

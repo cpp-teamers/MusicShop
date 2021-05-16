@@ -12,21 +12,6 @@ namespace MusicShop.ViewModels
 {
     public class AccountViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Account> Accounts { get; set; }
-        public AccountViewModel()
-        {
-            Accounts = new ObservableCollection<Account>();
-        }
-        private Account _selectedAccount;
-        public Account SelectedAccount
-        {
-            get { return _selectedAccount; }
-            set
-            {
-                _selectedAccount = value;
-                OnPropertyChanged("SelectedAccount");
-            }
-        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

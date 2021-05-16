@@ -13,21 +13,6 @@ namespace MusicShop.ViewModels
 {
     public class TrackViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Track> Tracks { get; set; }
-        public TrackViewModel()
-        {
-            Tracks = new ObservableCollection<Track>();
-        }
-        private Track _selectedTrack;
-        public Track SelectedTrack
-        {
-            get { return _selectedTrack; }
-            set
-            {
-                _selectedTrack = value;
-                OnPropertyChanged("SelectedTrack");
-            }
-        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
