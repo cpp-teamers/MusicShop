@@ -9,6 +9,7 @@
         Title="Authorization" 
         Height="450" 
         Width="800" 
+        x:Name="WinObj"
         Icon="../Pictures/Icons/loginIco.ico" >
 
     <Window.DataContext>
@@ -52,37 +53,50 @@
         </Style>
 
     </Window.Resources>
-    <Grid>
-        <StackPanel x:Name="LoginRegButtonPanel" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Style="{DynamicResource RoundButton}" x:Name="loginButton" Content="Login"/>
-            <Button Style="{DynamicResource RoundButton}" x:Name="registerButton" Content="I've got no account yet. Register" />
+    <Grid x:Name="ContainElems">
+        <StackPanel x:Name="LoginRegButtonPanel" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Style="{DynamicResource RoundButton}" x:Name="loginButton" Content="Login" Command="{Binding TurnOnLogin}" CommandParameter="{Binding ElementName=ContainElems}"/>
+            <Button Style="{DynamicResource RoundButton}" x:Name="registerButton" Content="I've got no account yet. Register" Command="{Binding ElementName=ContainElems}"/>
         </StackPanel>
 
-        <DockPanel x:Name="LoginPanel" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center" >
-            <TextBox x:Name="loginField" 
+            <DockPanel x:Name="LoginPanel" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <TextBox x:Name="loginField"
                      Style="{StaticResource MyWaterMarkStyle}" 
                      Tag="{Binding DefaultAcc.Login}"
+                     Text="{Binding Login}"
                      DockPanel.Dock="Top" >
-            </TextBox>
-            <TextBox x:Name="passField" 
+                </TextBox>
+
+
+                <TextBox x:Name="passField" 
                          Style="{StaticResource MyWaterMarkStyle}"
                          Tag="{Binding DefaultAcc.Password}"
+                         Text="{Binding Password}"
                          DockPanel.Dock="Top">
-            </TextBox>
-            <TextBox x:Name="emailField" 
+                </TextBox>
+                <TextBox x:Name="emailField" 
                      Style="{StaticResource MyWaterMarkStyle}" 
-                     Tag="{Binding DefaultAcc.Email}"
+                     Tag="{Binding DefaultAcc.Email }"
+                     Text="{Binding Email}"
                      DockPanel.Dock="Top">
-            </TextBox>
-            <TextBox x:Name="phoneField" 
+                </TextBox>
+                <TextBox x:Name="phoneField" 
                      Style="{StaticResource MyWaterMarkStyle}" 
                      Tag="{Binding DefaultAcc.Phone}"
+                     Text="{Binding Phone}"
                      DockPanel.Dock="Top" >
-            </TextBox>
+                </TextBox>
 
-            <Button DockPanel.Dock="Bottom"  Style="{StaticResource RoundButton}" Padding="10" Width="200" Content="Accept" Command="{Binding ExecRegistation}"/>
+                <Button DockPanel.Dock="Bottom"  
+                    Style="{StaticResource RoundButton}" 
+                    Padding="10" Width="200" 
+                    Content="Accept" 
+                    Command="{Binding ExecRegistation}"/>
 
-        </DockPanel>
+            </DockPanel>
+            <DockPanel x:Name="RegisterPanel">
 
+            </DockPanel>
+        
     </Grid>
 </Window>
