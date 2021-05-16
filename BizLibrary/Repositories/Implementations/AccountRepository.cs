@@ -31,9 +31,10 @@ namespace BizLibrary.Repositories.Implementations
 		public void DelAccount(int accountId)
 		{
 			var foundToDel = _modelManager.Accounts.Find(accountId);
+			_modelManager.Accounts.Remove(foundToDel);
 
 			_modelManager.Entry(foundToDel).State = EntityState.Deleted;
-			_modelManager.Accounts.Remove(foundToDel);
+			_modelManager.SaveChanges();
 		}
 
 		public Account GetAccountById(int accountId)
@@ -46,9 +47,9 @@ namespace BizLibrary.Repositories.Implementations
 			return _modelManager.Accounts;
 		}
 
-		public IEnumerable<Role> GetAllAccountsbyRoleId(int roleId)
+		public IEnumerable<Account> GetAllAccountsbyRoleId(int roleId)
 		{
-			throw new System.NotImplementedException();
+			return _modelManager.Accounts.Where(obj => obj.RoleId == roleId);
 		}
 	}
 }
