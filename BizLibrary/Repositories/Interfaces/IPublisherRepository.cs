@@ -10,7 +10,7 @@ namespace BizLibrary.Repositories.Interfaces
     interface IPublisherRepository
     {
         IEnumerable<Publisher> GetAllPublishers();
-        Publisher GetPublisherById();
+        Publisher GetPublisherById(int publisherId);
         void AddPublisher(Publisher addedPublisher);
         void ChangePublisher(Publisher changedPublisher);
         void DelPublisher(int publisherId);
