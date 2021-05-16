@@ -53,21 +53,38 @@
         </Style>
 
     </Window.Resources>
+
     <Grid x:Name="ContainElems">
-        <StackPanel x:Name="LoginRegButtonPanel" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Style="{DynamicResource RoundButton}" x:Name="loginButton" Content="Login" Command="{Binding TurnOnLogin}" CommandParameter="{Binding ElementName=ContainElems}"/>
-            <Button Style="{DynamicResource RoundButton}" x:Name="registerButton" Content="I've got no account yet. Register" Command="{Binding ElementName=ContainElems}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border x:Name="BackButton" DockPanel.Dock="Top" Margin="5" Padding="5" Width="50" Height="50" HorizontalAlignment="Left" Visibility="Hidden">
+            <Button Background="Transparent" Command="{Binding ExecBack}" CommandParameter="{Binding ElementName=ContainElems}">
+                    <Image Source="../Pictures/Icons/backArrow.ico" />
+                </Button>
+            </Border>
+        
+        <StackPanel Grid.Row="1" x:Name="LoginRegButtonPanel" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Style="{DynamicResource RoundButton}" 
+                    x:Name="loginButton" Content="Login" 
+                    Command="{Binding TurnOnLogin}" 
+                    CommandParameter="{Binding ElementName=ContainElems}"/>
+            <Button Style="{DynamicResource RoundButton}" 
+                    x:Name="registerButton" 
+                    Content="I've got no account yet. Register" 
+                    Command="{Binding TurnOnReg}" 
+                    CommandParameter="{Binding ElementName=ContainElems}"/>
         </StackPanel>
 
-            <DockPanel x:Name="LoginPanel" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" >
+        <DockPanel Grid.Row="1" x:Name="RegisterPanel" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" >
                 <TextBox x:Name="loginField"
                      Style="{StaticResource MyWaterMarkStyle}" 
                      Tag="{Binding DefaultAcc.Login}"
                      Text="{Binding Login}"
                      DockPanel.Dock="Top" >
                 </TextBox>
-
-
                 <TextBox x:Name="passField" 
                          Style="{StaticResource MyWaterMarkStyle}"
                          Tag="{Binding DefaultAcc.Password}"
@@ -85,8 +102,7 @@
                      Tag="{Binding DefaultAcc.Phone}"
                      Text="{Binding Phone}"
                      DockPanel.Dock="Top" >
-                </TextBox>
-
+            </TextBox>
                 <Button DockPanel.Dock="Bottom"  
                     Style="{StaticResource RoundButton}" 
                     Padding="10" Width="200" 
@@ -94,9 +110,9 @@
                     Command="{Binding ExecRegistation}"/>
 
             </DockPanel>
-            <DockPanel x:Name="RegisterPanel">
+        <DockPanel Grid.Row="1" x:Name="LoginPanel">
 
-            </DockPanel>
+        </DockPanel>
         
     </Grid>
 </Window>

@@ -77,12 +77,13 @@ namespace MusicShop.ViewModels
             }
         }
 
-
+        
+        private ICommand _execRegistation;
         public ICommand ExecRegistation
         {
 			get
 			{
-                return new RelayCommand(obj =>
+                return _execRegistation ?? new RelayCommand(obj =>
                 {
 					try
 					{
@@ -106,16 +107,26 @@ namespace MusicShop.ViewModels
 			}
 		}
 
+       
+        private ICommand _turnOnLogin;
         public ICommand TurnOnLogin
         {
             get
             {
-                return new RelayCommand(obj =>
+                return _turnOnLogin ?? new RelayCommand(obj =>
                 {
                     Grid ContainElemsGrid = (obj as Grid);
-
+                    
+                    Border backButton = default; 
                     foreach (var item in ContainElemsGrid.Children)
 					{
+
+                        if (item is Border potentialBackButton && potentialBackButton.Name == "BackButton")
+						{
+                            backButton = potentialBackButton;
+                            continue;
+                        }
+
                         if (item is StackPanel contElemStack && contElemStack.Name == "LoginRegButtonPanel") 
                         {
                             contElemStack.Visibility = Visibility.Hidden;
@@ -124,6 +135,7 @@ namespace MusicShop.ViewModels
 
 						if (item is DockPanel LoginP && LoginP.Name == "LoginPanel")
                         {
+                            OutvisBackButton(backButton);
                             LoginP.Visibility = Visibility.Visible;
                             break;
                         }
@@ -133,25 +145,35 @@ namespace MusicShop.ViewModels
             }
         }
 
-        public ICommand TurnOnLogin
+       
+        private ICommand _turnOnReg;
+        public ICommand TurnOnReg
         {
             get
             {
-                return new RelayCommand(obj =>
+                return _turnOnReg ?? new RelayCommand(obj =>
                 {
                     Grid ContainElemsGrid = (obj as Grid);
 
+                    Border backButton = default;
                     foreach (var item in ContainElemsGrid.Children)
                     {
+                        if (item is Border potentialBackButton && potentialBackButton.Name == "BackButton")
+                        {
+                            backButton = potentialBackButton;
+                            continue;
+                        }
+
                         if (item is StackPanel contElemStack && contElemStack.Name == "LoginRegButtonPanel")
                         {
                             contElemStack.Visibility = Visibility.Hidden;
                             continue;
                         }
 
-                        if (item is DockPanel LoginP && LoginP.Name == "LoginPanel")
+                        if (item is DockPanel RegP && RegP.Name == "RegisterPanel")
                         {
-                            LoginP.Visibility = Visibility.Visible;
+                            OutvisBackButton(backButton);
+                            RegP.Visibility = Visibility.Visible;
                             break;
                         }
                     }
@@ -160,6 +182,64 @@ namespace MusicShop.ViewModels
             }
         }
 
+        private ICommand _execBack;
+        public ICommand ExecBack
+		{
+			get
+			{
+                return _execBack ?? new RelayCommand(obj =>
+                {
+                    Grid ContainElemsGrid = (obj as Grid);
+
+                    StackPanel initButtons = default;
+                    Border backButton = default;
+                    
+                    foreach (var item in ContainElemsGrid.Children)
+                    {
+                        if (item is Border potentialBackButton && potentialBackButton.Name == "BackButton")
+                        {
+                            backButton = potentialBackButton;
+                            continue;
+                        }
+
+                        if (item is StackPanel potentialcontElemStack && potentialcontElemStack.Name == "LoginRegButtonPanel")
+                        {
+                            initButtons = potentialcontElemStack;
+                            continue;
+                        }
+
+                        if (item is DockPanel potentialReg && potentialReg.Name == "RegisterPanel" && potentialReg.Visibility == Visibility.Visible)
+                        {
+                            InvisBackButton(backButton);
+                            potentialReg.Visibility = Visibility.Hidden;
+                            continue;
+                        }
+
+                        if (item is DockPanel potentialLog && potentialLog.Name == "LoginPanel" && potentialLog.Visibility == Visibility.Visible)
+                        {
+                            InvisBackButton(backButton);
+                            potentialLog.Visibility = Visibility.Hidden;
+                            break;
+                        }
+                    }
+
+                    initButtons.Visibility = Visibility.Visible;
+                });
+			}
+		}
+
+		#region 'back' button manipulations
+
+		private void OutvisBackButton(Border borderWithButton)
+		{
+            borderWithButton.Visibility = Visibility.Visible;
+		}
+        private void InvisBackButton(Border borderWithButton)
+        {
+            borderWithButton.Visibility = Visibility.Hidden;
+        }
+        #endregion
+        #region Validation
 
         private string ValidateLogin()
 		{
@@ -205,7 +285,7 @@ namespace MusicShop.ViewModels
             }
             return _phone;
         }
-
+        #endregion
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
