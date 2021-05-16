@@ -112,14 +112,50 @@ namespace MusicShop.ViewModels
             {
                 return new RelayCommand(obj =>
                 {
-					foreach (var item in (obj as Grid).Children)
-					{
-						if (item is DockPanel)
-						{
+                    Grid ContainElemsGrid = (obj as Grid);
 
-						}
+                    foreach (var item in ContainElemsGrid.Children)
+					{
+                        if (item is StackPanel contElemStack && contElemStack.Name == "LoginRegButtonPanel") 
+                        {
+                            contElemStack.Visibility = Visibility.Hidden;
+                            continue;
+                        } 
+
+						if (item is DockPanel LoginP && LoginP.Name == "LoginPanel")
+                        {
+                            LoginP.Visibility = Visibility.Visible;
+                            break;
+                        }
 					} 
                     
+                });
+            }
+        }
+
+        public ICommand TurnOnLogin
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    Grid ContainElemsGrid = (obj as Grid);
+
+                    foreach (var item in ContainElemsGrid.Children)
+                    {
+                        if (item is StackPanel contElemStack && contElemStack.Name == "LoginRegButtonPanel")
+                        {
+                            contElemStack.Visibility = Visibility.Hidden;
+                            continue;
+                        }
+
+                        if (item is DockPanel LoginP && LoginP.Name == "LoginPanel")
+                        {
+                            LoginP.Visibility = Visibility.Visible;
+                            break;
+                        }
+                    }
+
                 });
             }
         }
