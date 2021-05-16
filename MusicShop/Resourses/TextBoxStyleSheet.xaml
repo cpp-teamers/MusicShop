@@ -3,10 +3,16 @@
     <Style x:Key="baseTextBoxFont">
         <Setter Property="Control.FontFamily" Value="Comic Sans"/>
         <Setter Property="Control.FontSize" Value="18"/>
-        <Setter Property="Control.FontWeight" Value="ExtraLight"/>
+        
     </Style>
 
 
+    <Style x:Key="PadsMrgsPass" TargetType="PasswordBox" BasedOn="{StaticResource baseTextBoxFont}">
+        <Setter Property="Margin" Value="0 10"/>
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="Padding" Value="5"/>
+    </Style>
+    
     <Style x:Key="PadsMrgs" TargetType="TextBox" BasedOn="{StaticResource baseTextBoxFont}">
         <Setter Property="Margin" Value="0 10"/>
         <Setter Property="Width" Value="200"/>
@@ -15,20 +21,9 @@
 
     <Style TargetType="TextBox" BasedOn="{StaticResource PadsMrgs}">
         <Setter Property="Control.BorderThickness"  Value="2"/>
-        <Setter Property="Control.BorderBrush" Value="DarkRed"/>
         <Setter Property="FontWeight" Value="ExtraLight"/>
     </Style>
 
-
-    <Style x:Key="PadsMrgsPassw" TargetType="PasswordBox" BasedOn="{StaticResource baseTextBoxFont}">
-        <Setter Property="Margin" Value="0 10"/>
-        <Setter Property="Width" Value="200"/>
-        <Setter Property="Padding" Value="5"/>
-    </Style>
-
-    <Style TargetType="PasswordBox" BasedOn="{StaticResource PadsMrgsPassw}">
-        <Setter Property="Control.BorderThickness"  Value="2"/>
-        <Setter Property="Control.BorderBrush" Value="DarkRed"/>
-        <Setter Property="FontWeight" Value="ExtraLight"/>
-    </Style>
+    
+    
 </ResourceDictionary>

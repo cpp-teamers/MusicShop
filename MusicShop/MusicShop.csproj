@@ -142,5 +142,11 @@
   <ItemGroup>
     <Resource Include="Pictures\Images\Phone.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BizLibrary\BizLibrary.csproj">
+      <Project>{fd0ac8f0-64c7-4f36-8dd1-5f7f53128eee}</Project>
+      <Name>BizLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

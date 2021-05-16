@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,45 +23,5 @@ namespace MusicShop.Views
             InitializeComponent();
             //Window windowToOpen;
         }
-
-        private void loginField_IsMouseCapturedChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
-		}
-
-        private void passField_IsMouseCapturedChanged(object sender, DependencyPropertyChangedEventArgs e)
-		{
-           
-        }
-
-		private void emailField_IsMouseCapturedChanged(object sender, DependencyPropertyChangedEventArgs e)
-		{
-
-		}
-
-		private void phoneField_IsMouseCapturedChanged(object sender, DependencyPropertyChangedEventArgs e)
-		{
-
-		}
-
-		private void loginField_MouseLeave(object sender, MouseEventArgs e)
-		{
-
-		}
-
-		private void passField_MouseLeave(object sender, MouseEventArgs e)
-		{
-
-		}
-
-		private void emailField_MouseLeave(object sender, MouseEventArgs e)
-		{
-
-		}
-
-		private void phoneField_MouseLeave(object sender, MouseEventArgs e)
-		{
-
-		}
 	}
 }
