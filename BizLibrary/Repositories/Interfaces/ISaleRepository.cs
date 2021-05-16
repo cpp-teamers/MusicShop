@@ -12,7 +12,7 @@ namespace BizLibrary.Repositories.Interfaces
         IEnumerable<Sale> GetAllSalesByAccoutId(int accountId);
         IEnumerable<Sale> GetAllSalesByPlateId(int plateId);
         void AddSale(Sale sale);
-        void ChangeSale(Sale sale);
+        void ChangeSale(Sale changedSale);
         void DelSale(int saleId);
     }
 }

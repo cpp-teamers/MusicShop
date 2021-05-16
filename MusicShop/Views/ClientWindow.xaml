@@ -16,7 +16,7 @@
                     <TextBlock Margin="5 3">Store</TextBlock>
                 </StackPanel>
             </TabItem.Header>
-                <Grid>
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
@@ -61,26 +61,26 @@
                 <DockPanel Grid.Row="0" Grid.Column="1" >
                     <TextBlock DockPanel.Dock="Left" Text="Genres:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <ComboBox x:Name="genresList" DockPanel.Dock="Left" Margin="5 10" Width="150"/>
-            
+
                     <TextBlock DockPanel.Dock="Left" Text="Authors:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <ComboBox x:Name="authorsList" DockPanel.Dock="Left" Margin="5 10" Width="150"/>
-            
+
                     <TextBlock DockPanel.Dock="Left" Text="Plate:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-            
+
                     <Button x:Name="searchButton" Content="Search" DockPanel.Dock="Right" Margin="0 12 10 12" Width="100" FontSize="20"/>
-            
+
                     <TextBox x:Name="plateField"  Margin="5 7" VerticalAlignment="Center" FontSize="20"/>
                 </DockPanel>
                 <DockPanel Grid.Row="1" Grid.Column="0">
                     <TextBlock DockPanel.Dock="Top" Text="Name:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <TextBox x:Name="plateName"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True"/>
-            
+
                     <TextBlock DockPanel.Dock="Top" Text="Author:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <TextBox x:Name="plateAuthor"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True"/>
-            
+
                     <TextBlock DockPanel.Dock="Top" Text="Publisher:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <TextBox x:Name="platePublisher"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True"/>
-            
+
                     <TextBlock DockPanel.Dock="Top" Text="Price:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <TextBox x:Name="platePrice"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" />
 
