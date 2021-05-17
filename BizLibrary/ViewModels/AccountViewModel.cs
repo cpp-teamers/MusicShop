@@ -8,11 +8,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
+using HashGenerators;
+using BizLibrary.Repositories.Interfaces;
+using BizLibrary.Repositories.Implementations;
 
 namespace MusicShop.ViewModels
 {
 	public class AccountViewModel : INotifyPropertyChanged
     {
+        IAccountRepository _accountRepo = new AccountRepository();
+
         private Account _defaultAcc = new Account()
         {
             Login = "Login",
@@ -78,24 +83,83 @@ namespace MusicShop.ViewModels
         }
 
 
+        private ICommand _execBack;
+        public ICommand ExecBack
+        {
+            get
+            {
+                return _execBack ?? new RelayCommand(obj =>
+                {
+                    Grid ContainElemsGrid = (obj as Grid);
+
+                    StackPanel initButtons = default;
+                    Border backButton = default;
+
+                    foreach (var item in ContainElemsGrid.Children)
+                    {
+                        if (item is Border potentialBackButton && potentialBackButton.Name == "BackButton")
+                        {
+                            backButton = potentialBackButton;
+                            continue;
+                        }
+
+                        if (item is StackPanel potentialcontElemStack && potentialcontElemStack.Name == "LoginRegButtonPanel")
+                        {
+                            initButtons = potentialcontElemStack;
+                            continue;
+                        }
+
+                        if (item is DockPanel potentialReg && potentialReg.Name == "RegisterPanel" && potentialReg.Visibility == Visibility.Visible)
+                        {
+                            InvisBackButton(backButton);
+                            potentialReg.Visibility = Visibility.Hidden;
+                            continue;
+                        }
+
+                        if (item is DockPanel potentialLog && potentialLog.Name == "LoginPanel" && potentialLog.Visibility == Visibility.Visible)
+                        {
+                            InvisBackButton(backButton);
+                            potentialLog.Visibility = Visibility.Hidden;
+                            break;
+                        }
+                    }
+
+                    initButtons.Visibility = Visibility.Visible;
+                });
+            }
+        }
+        #region 'back' button manipulations
+
+        private void OutvisBackButton(Border borderWithButton)
+        {
+            borderWithButton.Visibility = Visibility.Visible;
+        }
+        private void InvisBackButton(Border borderWithButton)
+        {
+            borderWithButton.Visibility = Visibility.Hidden;
+        }
+        #endregion
+
+        #region Into Registration Logic
+
+        private ICommand _execRegistation;
         public ICommand ExecRegistation
         {
 			get
 			{
-                return new RelayCommand(obj =>
+                return _execRegistation ?? new RelayCommand(obj =>
                 {
 					try
 					{
                         Account newAcc = new Account()
                         {
                             Login = ValidateLogin(),
-                            Password = ValidatePassword(),
+                            Password = MD5Generator.ProduceMD5Hash(ValidatePassword()),
                             Email = ValidateEmail(),
                             Phone = ValidatePhone()
                         };
 
-                        //TODO account repo insert
-
+                        _accountRepo.AddAccount(newAcc);
                     }
                     catch (System.Exception err)
 					{
@@ -105,40 +169,24 @@ namespace MusicShop.ViewModels
                 });
 			}
 		}
-
-        public ICommand TurnOnLogin
-        {
-            get
-            {
-                return new RelayCommand(obj =>
-                {
-					foreach (var item in (obj as Grid).Children)
-					{
-						if (item is DockPanel)
-						{
-
-						}
-					} 
-                    
-                });
-            }
-        }
-
+        #endregion
+       
+        #region Validation
 
         private string ValidateLogin()
-		{
-			if (string.IsNullOrWhiteSpace(_login))
-			{
+        {
+            if (string.IsNullOrWhiteSpace(_login))
+            {
                 throw new System.Exception("Login Field is Empty!");
             }
-			if (_login.Length >= 100)
-			{
+            if (_login.Length >= 100)
+            {
                 throw new System.Exception("Login is too large!");
-			}
+            }
 
             Regex regExp = new Regex(@"^(?=.*[A-Za-z0-9]$)[A-Za-z\d.-][A-Za-z\d.-]{0,19}");
-			if (!regExp.IsMatch(_login))
-			{
+            if (!regExp.IsMatch(_login))
+            {
                 throw new System.Exception("Login is invalid! Try again...");
             }
             return _login;
@@ -146,7 +194,7 @@ namespace MusicShop.ViewModels
 
         private string ValidatePassword()
         {
-            Regex regExp = new Regex(@"^(?=i)(?=.*[a-z])(?=.*[0-9])(?=.*[@#_])[a-z][a-z0-9@#_]{6,}[a-z0-9]$");
+            Regex regExp = new Regex(@"^(?=.*[A-Z])(?=.*\d)(?!.*(.)\1\1)[a-zA-Z0-9@]{6,12}$");
             if (!regExp.IsMatch(_password))
             {
                 throw new System.Exception("Password is invalid! Try again...");
@@ -169,7 +217,83 @@ namespace MusicShop.ViewModels
             }
             return _phone;
         }
+        #endregion
 
+        #region init buttons logic
+        private ICommand _turnOnLogin;
+        public ICommand TurnOnLogin
+        {
+            get
+            {
+                return _turnOnLogin ?? new RelayCommand(obj =>
+                {
+                    Grid ContainElemsGrid = (obj as Grid);
+
+                    Border backButton = default;
+                    foreach (var item in ContainElemsGrid.Children)
+                    {
+
+                        if (item is Border potentialBackButton && potentialBackButton.Name == "BackButton")
+                        {
+                            backButton = potentialBackButton;
+                            continue;
+                        }
+
+                        if (item is StackPanel contElemStack && contElemStack.Name == "LoginRegButtonPanel")
+                        {
+                            contElemStack.Visibility = Visibility.Hidden;
+                            continue;
+                        }
+
+                        if (item is DockPanel LoginP && LoginP.Name == "LoginPanel")
+                        {
+                            OutvisBackButton(backButton);
+                            LoginP.Visibility = Visibility.Visible;
+                            break;
+                        }
+                    }
+
+                });
+            }
+        }
+
+        private ICommand _turnOnReg;
+        public ICommand TurnOnReg
+        {
+            get
+            {
+                return _turnOnReg ?? new RelayCommand(obj =>
+                {
+                    Grid ContainElemsGrid = (obj as Grid);
+
+                    Border backButton = default;
+                    foreach (var item in ContainElemsGrid.Children)
+                    {
+                        if (item is Border potentialBackButton && potentialBackButton.Name == "BackButton")
+                        {
+                            backButton = potentialBackButton;
+                            continue;
+                        }
+
+                        if (item is StackPanel contElemStack && contElemStack.Name == "LoginRegButtonPanel")
+                        {
+                            contElemStack.Visibility = Visibility.Hidden;
+                            continue;
+                        }
+
+                        if (item is DockPanel RegP && RegP.Name == "RegisterPanel")
+                        {
+                            OutvisBackButton(backButton);
+                            RegP.Visibility = Visibility.Visible;
+                            break;
+                        }
+                    }
+
+                });
+            }
+        }
+        #endregion
+        
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

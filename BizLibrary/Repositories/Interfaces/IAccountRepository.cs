@@ -10,7 +10,7 @@ namespace BizLibrary.Repositories.Interfaces
     interface IAccountRepository
     {
         IEnumerable<Account> GetAllAccounts();
-        IEnumerable<Role> GetAllAccountsbyRoleId(int roleId);
+        IEnumerable<Account> GetAllAccountsbyRoleId(int roleId);
         Account GetAccountById(int accountId);
         void AddAccount(Account addedAccount);
         void ChangeAccount(Account changedAccount);
