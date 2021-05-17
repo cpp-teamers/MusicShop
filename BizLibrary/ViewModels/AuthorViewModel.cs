@@ -17,6 +17,30 @@ namespace BizLibrary.ViewModels
     {
         public ObservableCollection<Author> Authors { get; set; }
         private AuthorRepository _ar { get; set; }
+        private Author _author;
+        public AuthorViewModel(Author author)
+        {
+            _author = author;
+        }
+        public int Id
+        {
+            get { return _author.Id; }
+            set
+            {
+                _author.Id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
+        public string Name
+        {
+            get { return _author.Name; }
+            set
+            {
+                _author.Name = value;
+                OnPropertyChanged("Name");
+            }
+        }
         public AuthorViewModel()
         {
             Authors = new ObservableCollection<Author>();
