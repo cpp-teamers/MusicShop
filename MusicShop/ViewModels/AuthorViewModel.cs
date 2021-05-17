@@ -8,10 +8,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using MusicShop.Commands;
-using BizLibrary.Repositories.Implementations;
+using MusicShop.Repositories.Implementations;
 using System.Windows;
 
-namespace BizLibrary.ViewModels
+namespace MusicShop.ViewModels
 {
     public class AuthorViewModel : INotifyPropertyChanged
     {
@@ -111,7 +111,7 @@ namespace BizLibrary.ViewModels
                         MessageBox.Show($"{_selectedAuthor.Name} was successfully added!");
                     }
                     else
-                    { 
+                    {
                         _ar.ChangeAuthor(SelectedAuthor);
                         MessageBox.Show($"{_selectedAuthor.Name} was successfully changed!");
                     }

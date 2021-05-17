@@ -9,10 +9,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
 using System.Collections.ObjectModel;
-using BizLibrary.Repositories.Implementations;
+using MusicShop.Repositories.Implementations;
 using System.Collections.Generic;
 
-namespace BizLibrary.ViewModels
+namespace MusicShop.ViewModels
 {
     public class ClientViewModel : INotifyPropertyChanged
     {

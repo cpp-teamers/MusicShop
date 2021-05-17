@@ -8,7 +8,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BizLibrary.ViewModels
+namespace MusicShop.ViewModels
 {
     public class PublisherViewModel : INotifyPropertyChanged
     {

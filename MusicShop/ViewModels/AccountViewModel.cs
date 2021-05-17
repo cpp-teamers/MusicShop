@@ -1,5 +1,4 @@
-﻿using ModelsLibrary.Models;
-using MusicShop.Commands;
+﻿using MusicShop.Commands;
 using System.ComponentModel;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
@@ -8,9 +7,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
+using MusicShop.Repositories.Interfaces;
+using MusicShop.Repositories.Implementations;
+using ModelsLibrary.Models;
 using HashGenerators;
-using BizLibrary.Repositories.Interfaces;
-using BizLibrary.Repositories.Implementations;
 
 namespace MusicShop.ViewModels
 {

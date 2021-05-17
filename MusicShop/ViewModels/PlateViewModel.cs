@@ -8,23 +8,39 @@ using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
-using BizLibrary.Repositories.Implementations;
+using MusicShop.Repositories.Implementations;
 using System.Windows;
+using MusicShop.Commands;
 
-
-namespace BizLibrary.ViewModels
+namespace MusicShop.ViewModels
 {
     public class PlateViewModel : INotifyPropertyChanged
     {
-        private AllRepositories rep = new AllRepositories();
-        
+        private AllRepositories _rep = new AllRepositories();
+        ObservableCollection<Plate> Plates { get; set; }
+        private Plate _plate1;
+        public Plate SelectedPlate
+        {
+            get { return _plate1; }
+            set 
+            {
+                _plate1 = value;
+                OnPropertyChanged("SelectedPlate");
+            }
+        }
+        public PlateViewModel()
+        {
+            Plates = new ObservableCollection<Plate>();
+        }
         private Plate _plate;
         public PlateViewModel(Plate plate)
         {
-            _plate = plate;
-            _plate.Tracks = rep.TrackRepository.GetAllTracksByPlateId(_plate.Id);
+            Plates = new ObservableCollection<Plate>();
+            _plate = new Plate();
+            _plate.Tracks = _rep.TrackRepository.GetAllTracksByPlateId(_plate.Id);
+            MessageBox.Show(_plate.Tracks.Count().ToString());
         }
-
+        
         public int Id
         {
             get { return _plate.Id; }
@@ -34,7 +50,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("Id");
             }
         }
-
         public string Name
         {
             get { return _plate.Name; }
@@ -44,7 +59,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("Name");
             }
         }
-
         public DateTime PublishDate
         {
             get { return _plate.PublishDate; }
@@ -54,7 +68,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("PublishDate");
             }
         }
-
         public string AlbumImagePath
         {
             get { return _plate.AlbumImagePath; }
@@ -64,7 +77,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("AlbumImagePath");
             }
         }
-
         public int Amount
         {
             get { return _plate.Amount; }
@@ -74,7 +86,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("Amount");
             }
         }
-
         public decimal Cost
         {
             get { return _plate.Cost; }
@@ -84,7 +95,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("Cost");
             }
         }
-
         public int AuthorId
         {
             get { return _plate.AuthorId; }
@@ -94,7 +104,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("AuthorId");
             }
         }
-
         public int GenreId
         {
             get { return _plate.GenreId; }
@@ -104,7 +113,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("GenreId");
             }
         }
-
         public int PublisherId
         {
             get { return _plate.PublisherId; }
@@ -114,7 +122,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("PublisherId");
             }
         }
-
         public decimal RealCost
         {
             get { return _plate.RealCost; }
@@ -124,7 +131,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("RealCost");
             }
         }
-
         public Author Author
         {
             get { return _plate.Author; }
@@ -134,7 +140,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("Author");
             }
         }
-
         public ModelsLibrary.Models.Publisher Publisher
         {
             get { return _plate.Publisher; }
@@ -144,7 +149,6 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("Publisher");
             }
         }
-
         public IEnumerable<Track> Tracks
         {
             get { return _plate.Tracks; }
@@ -154,12 +158,44 @@ namespace BizLibrary.ViewModels
                 OnPropertyChanged("Tracks");
             }
         }
-
         private void LoadTracks()
         {
             
         }
-
+        private RelayCommand _addPlate;
+        public RelayCommand AddPlate
+        {
+            get
+            {
+                return _addPlate ?? (new RelayCommand(obj =>
+                {
+                    var author = obj as Author;
+                    DateTime date = new DateTime(1900, 1, 1);
+                    Plate plate = new Plate() {
+                       AlbumImagePath = @"..\..\MusicShop\Pictures\Images\defaultAlbumImage.png",
+                       Cost = 0,
+                       PublishDate = date,
+                       Amount = 0,
+                       AuthorId = author.Id,
+                       GenreId = GenreId,
+                       Name = "New Plate",
+                       PublisherId = PublisherId,
+                       RealCost = 0
+                    };
+                    Plates.Add(plate);
+                    MessageBox.Show("!");
+                    OnPropertyChanged("Plates");
+                }
+            ));
+            }
+        }
+        private void LoadPlates()
+        {
+            Plates.Clear();
+            var platesList = _rep.PlateRepository.GetAllPlates().ToList();
+            foreach (var plate in platesList)
+                Plates.Add(plate);
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

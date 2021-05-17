@@ -74,16 +74,6 @@
     <Compile Include="Repositories\Interfaces\IRoleRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISaleRepository.cs" />
     <Compile Include="Repositories\Interfaces\ITrackRepository.cs" />
-    <Compile Include="ViewModels\AccountViewModel.cs" />
-    <Compile Include="ViewModels\AuthorViewModel.cs" />
-    <Compile Include="ViewModels\ClientViewModel.cs" />
-    <Compile Include="ViewModels\DiscountViewModel.cs" />
-    <Compile Include="ViewModels\GenreViewModel.cs" />
-    <Compile Include="ViewModels\PlateViewModel.cs" />
-    <Compile Include="ViewModels\PublisherViewModel.cs" />
-    <Compile Include="ViewModels\RoleViewModel.cs" />
-    <Compile Include="ViewModels\SaleViewModel.cs" />
-    <Compile Include="ViewModels\TrackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HashGenerators\HashGenerators.csproj">

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicShop"
-        xmlns:vm1="clr-namespace:MusicShop.ViewModels;assembly=BizLibrary"
+        xmlns:vm1="clr-namespace:MusicShop.ViewModels"
         mc:Ignorable="d"
         Title="Authorization" 
         Height="450" 

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicShop.Views"
-        xmlns:vm1="clr-namespace:MusicShop.ViewModels;assembly=BizLibrary"
+        xmlns:vm1="clr-namespace.ViewModels;assembly=BizLibrary"
         mc:Ignorable="d"
         Title="MusicStore" Height="750" Width="1190" MaxWidth="1190" MinWidth="1190" MinHeight="750" MaxHeight="750"
         FontFamily="The Medic Demo"
