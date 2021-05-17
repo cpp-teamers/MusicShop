@@ -4,10 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicShop.Views"
+        xmlns:vm1="clr-namespace:MusicShop.ViewModels;assembly=BizLibrary"
         mc:Ignorable="d"
         Title="MusicStore" Height="750" Width="1200"
         FontFamily="The Medic Demo"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="../Pictures/Icons/loginIco.ico"
+        Loaded="Window_Loaded">
     <TabControl>
         <TabItem>
             <TabItem.Header>
@@ -30,12 +33,12 @@
                 </Grid>
                 <ScrollViewer Grid.Column="1" Grid.Row="1" Background="#FFF1F1F1">
                     <StackPanel Margin="20 20">
-                        <ItemsControl x:Name="ListViewPlats" ItemsSource="{Binding }">
+                        <ListView x:Name="ListViewPlats" ItemsSource="{Binding Plates}" SelectedItem="{Binding SelectedPlate}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Margin="10" Width="110" Height="160">
+                                    <Border Margin="10" Width="180" Height="230">
                                         <StackPanel>
-                                            <Border Width="100" Height="100" CornerRadius="5" Margin="5">
+                                            <Border Width="170" Height="170" CornerRadius="5" Margin="5">
                                                 <Border.Effect>
                                                     <DropShadowEffect ShadowDepth="1"/>
                                                 </Border.Effect>
@@ -43,7 +46,7 @@
                                                     <ImageBrush ImageSource="{Binding AlbumImagePath}"/>
                                                 </Border.Background>
                                             </Border>
-                                            <TextBlock Margin="5" Text="{Binding RealCost, StringFormat={}{0:C}}" FontSize="17" FontFamily="Franklin Gothic Medium"/>
+                                            <TextBlock Margin="5" Text="{Binding Cost, StringFormat={}{0:C}}" FontSize="17" FontFamily="Franklin Gothic Medium"/>
                                             <TextBlock Margin="5 0" Text="{Binding Name}" FontSize="15"/>
                                             <TextBlock Margin="5 0" Text="{Binding Author}" FontSize="12"/>
                                         </StackPanel>
@@ -55,15 +58,15 @@
                                     <WrapPanel/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+                        </ListView>
                     </StackPanel>
                 </ScrollViewer>
                 <DockPanel Grid.Row="0" Grid.Column="1" >
                     <TextBlock DockPanel.Dock="Left" Text="Genres:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <ComboBox x:Name="genresList" DockPanel.Dock="Left" Margin="5 10" Width="150"/>
+                    <ComboBox x:Name="genresList" DockPanel.Dock="Left" Margin="5 10" Width="150" ItemsSource="{Binding Genres}" DisplayMemberPath="Name" VerticalAlignment="Center" FontSize="20" SelectedItem="{Binding SelectedGenre}"/>
 
                     <TextBlock DockPanel.Dock="Left" Text="Authors:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <ComboBox x:Name="authorsList" DockPanel.Dock="Left" Margin="5 10" Width="150"/>
+                    <ComboBox x:Name="authorsList" DockPanel.Dock="Left" Margin="5 10" Width="150" ItemsSource="{Binding Authors}" DisplayMemberPath="Name" VerticalAlignment="Center" FontSize="20" SelectedItem="{Binding SelectedAuthor}"/>
 
                     <TextBlock DockPanel.Dock="Left" Text="Plate:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
 
@@ -71,25 +74,25 @@
 
                     <TextBox x:Name="plateField"  Margin="5 7" VerticalAlignment="Center" FontSize="20"/>
                 </DockPanel>
-                <DockPanel Grid.Row="1" Grid.Column="0">
+                <DockPanel Grid.Row="1" Grid.Column="0" DataContext="{Binding SelectedPlate}">
                     <TextBlock DockPanel.Dock="Top" Text="Name:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <TextBox x:Name="plateName"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True"/>
+                    <TextBox x:Name="plateName"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Name}"/>
 
                     <TextBlock DockPanel.Dock="Top" Text="Author:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <TextBox x:Name="plateAuthor"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True"/>
+                    <TextBox x:Name="plateAuthor"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding AuthorId}"/>
 
                     <TextBlock DockPanel.Dock="Top" Text="Publisher:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <TextBox x:Name="platePublisher"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True"/>
+                    <TextBox x:Name="platePublisher"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Publisher}"/>
 
                     <TextBlock DockPanel.Dock="Top" Text="Price:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <TextBox x:Name="platePrice"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" />
+                    <TextBox x:Name="platePrice"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Cost, StringFormat={}{0:C}}"/>
 
                     <TextBlock DockPanel.Dock="Top" Text="Amount:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <TextBox x:Name="plateAmount"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" />
+                    <TextBox x:Name="plateAmount"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Amount}"/>
 
                     <TextBlock DockPanel.Dock="Top" Text="Tracks:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <Button x:Name="buyButton" DockPanel.Dock="Bottom" Margin="5 10" Content="Buy" FontSize="20" BorderThickness="1"/>
-                    <ListBox x:Name="trackList" Margin="5 0"/>
+                    <ListBox x:Name="trackList" Margin="5 0" ItemsSource="{Binding SelectedPlate.Tracks}" DisplayMemberPath="Name"/>
                 </DockPanel>
             </Grid>
         </TabItem>

@@ -49,5 +49,6 @@ namespace ModelsLibrary.Models
         public virtual Genre Genre { get; set; }
         //---------------------------------------------
         public virtual IEnumerable<Discount> Discounts { get; set; }
+        public virtual IEnumerable<Track> Tracks { get; set; }
     }
 }

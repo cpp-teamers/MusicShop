@@ -40,9 +40,19 @@ namespace BizLibrary.Repositories.Implementations
             _modelManager.SaveChanges();
         }
 
+        public IEnumerable<Plate> GetAllPlates()
+        {
+            return _modelManager.Plates.ToList();
+        }
+
         public IEnumerable<Plate> GetAllPlatesByAuthorId(int authorId)
         {
             return _modelManager.Plates.Where(p => p.AuthorId == authorId).ToList();
+        }
+
+        public IEnumerable<Plate> GetAllPlatesByAuthorIdAndGenreId(int genreId, int authorId)
+        {
+            return _modelManager.Plates.Where(p => p.GenreId == genreId && p.AuthorId == authorId).ToList();
         }
 
         public IEnumerable<Plate> GetAllPlatesByGenreId(int genreId)
@@ -58,6 +68,11 @@ namespace BizLibrary.Repositories.Implementations
         public Plate GetPlateById(int plateId)
         {
             return _modelManager.Plates.Find(plateId);
+        }
+
+        public Plate GetPlateByName(string plateName)
+        {
+            return _modelManager.Plates.Where(p => p.Name == plateName).FirstOrDefault();
         }
     }
 }
