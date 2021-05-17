@@ -79,10 +79,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resourses\ClientDictionary.xaml">
     <Page Include="Resourses\RoundButtonSheet.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resourses\TextBoxStyleSheet.xaml">
       <SubType>Designer</SubType>
@@ -171,16 +170,16 @@
     <Resource Include="Pictures\Images\TheBeatles.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Pictures\Images\client.jpg" />
+    <Resource Include="Pictures\Images\plate.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\Images\MusicShopLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Pictures\Images\plate.png" />
+    <Resource Include="Pictures\Images\Listen.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Pictures\Images\your_addHere.jpg" />
+    <Resource Include="Pictures\Images\Vislovo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
