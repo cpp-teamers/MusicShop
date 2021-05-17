@@ -28,7 +28,7 @@ namespace BizLibrary.ViewModels
             set
             {
                 _selectedGenre = value;
-                LoadTasksByAuthorIdAndGenreId(SelectedAuthor.Id, SelectedGenre.Id);
+                LoadPlatesByAuthorIdAndGenreId(SelectedAuthor.Id, SelectedGenre.Id);
                 OnPropertyChanged("SelectedGenre");
             }
         }
@@ -40,7 +40,7 @@ namespace BizLibrary.ViewModels
             set
             {
                 _selectedAuthor = value;
-                LoadTasksByAuthorIdAndGenreId(SelectedAuthor.Id, SelectedGenre.Id);
+                LoadPlatesByAuthorIdAndGenreId(SelectedAuthor.Id, SelectedGenre.Id);
                 OnPropertyChanged("SelectedAuthor");
             }
         }
@@ -69,12 +69,17 @@ namespace BizLibrary.ViewModels
                         var plate = rep.PlateRepository.GetPlateByName(text);
                         Plates.Clear();
                         Plates.Add(new PlateViewModel(plate));
+                        if (plate == null)
+                        {
+                            MessageBox.Show($"'{text}' doesn`t find", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            LoadPlates();
+                        }
                     }
                 }));
             }
         }
 
-        private void LoadTasks()
+        private void LoadPlates()
         {
             Plates.Clear();
             var platesFromDb = rep.PlateRepository.GetAllPlates();
@@ -84,7 +89,7 @@ namespace BizLibrary.ViewModels
             }
         }
 
-        private void LoadTasksByAuthorIdAndGenreId(int aid, int gid)
+        private void LoadPlatesByAuthorIdAndGenreId(int aid, int gid)
         {
             Plates.Clear();
             IEnumerable<Plate> platesFormDbFiltered;
@@ -109,7 +114,7 @@ namespace BizLibrary.ViewModels
             Authors = new ObservableCollection<AuthorViewModel>();
             LoadGenres();
             LoadAuthors();
-            LoadTasks();
+            LoadPlates();
         }
 
         private void LoadGenres()
