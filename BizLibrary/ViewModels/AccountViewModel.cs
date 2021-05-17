@@ -167,7 +167,8 @@ namespace MusicShop.ViewModels
                             Login = ValidateLogin(),
                             Password = MD5Generator.ProduceMD5Hash(ValidatePassword()),
                             Email = ValidateEmail(),
-                            Phone = ValidatePhone()
+                            Phone = ValidatePhone(),
+                            RoleId = (int)Role_Id.Client
                         };
                         var isSuchLogin = _accountRepo.GetAllAccounts().Where(a => a.Login == Login).FirstOrDefault();
 						if (isSuchLogin !=  null)
@@ -176,10 +177,12 @@ namespace MusicShop.ViewModels
 						}
                         
                         _accountRepo.AddAccount(newAcc);
+                        MessageBox.Show($"Your account has been registered!", "Success", 
+                            MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     catch (System.Exception err)
 					{
-                        MessageBox.Show($"{err.Message}", "Error",
+                        MessageBox.Show($"{err.InnerException?.Message ?? err.Message}", "Error",
                             MessageBoxButton.OK, MessageBoxImage.Error);
 					}
                 });
@@ -245,7 +248,8 @@ namespace MusicShop.ViewModels
 					}
 					catch (System.Exception err)
                     {
-                        MessageBox.Show($"{err.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"{err.InnerException?.Message ?? err.Message}", "Error",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     finally
 					{
