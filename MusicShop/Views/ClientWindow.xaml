@@ -38,7 +38,7 @@
                 </Grid>
                 <ScrollViewer Grid.Column="1" Grid.Row="1" Background="#FFF1F1F1" Margin="0,0,10,0">
                     <StackPanel Margin="20 20">
-                        <ListView x:Name="ListViewPlats" ItemsSource="{Binding Plates}" SelectedItem="{Binding SelectedPlate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#FFF1F1F1" BorderThickness="0" BorderBrush="#FFF1F1F1">
+                        <ListView x:Name="ListViewPlats" ItemsSource="{Binding Plates}" SelectedItem="{Binding SelectedPlate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#FFF1F1F1" BorderThickness="0" BorderBrush="#FFF1F1F1" ScrollViewer.CanContentScroll="True">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Border Margin="10" Width="180" Height="240">
