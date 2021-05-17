@@ -11,7 +11,7 @@ using MusicShop.Commands;
 using BizLibrary.Repositories.Implementations;
 using System.Windows;
 
-namespace MusicShop.ViewModels
+namespace BizLibrary.ViewModels
 {
     public class AuthorViewModel : INotifyPropertyChanged
     {

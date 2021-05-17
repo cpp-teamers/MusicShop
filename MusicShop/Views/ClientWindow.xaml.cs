@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BizLibrary.ViewModels;
 
 namespace MusicShop.Views
 {
@@ -19,6 +20,13 @@ namespace MusicShop.Views
 		public ClientWindow()
 		{
 			InitializeComponent();
+			this.DataContext = new ClientViewModel();
 		}
-	}
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+			genresList.SelectedIndex = 0;
+			authorsList.SelectedIndex = 0;
+        }
+    }
 }
