@@ -67,6 +67,14 @@
     <Compile Include="Migrations\202105131522388_AccountRoleAdded.Designer.cs">
       <DependentUpon>202105131522388_AccountRoleAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105171007349_VirtualProperties.cs" />
+    <Compile Include="Migrations\202105171007349_VirtualProperties.designer.cs">
+      <DependentUpon>202105171007349_VirtualProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105171010427_ActorsAuthors.cs" />
+    <Compile Include="Migrations\202105171010427_ActorsAuthors.designer.cs">
+      <DependentUpon>202105171010427_ActorsAuthors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Author.cs" />
@@ -92,6 +100,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105131522388_AccountRoleAdded.resx">
       <DependentUpon>202105131522388_AccountRoleAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105171007349_VirtualProperties.resx">
+      <DependentUpon>202105171007349_VirtualProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105171010427_ActorsAuthors.resx">
+      <DependentUpon>202105171010427_ActorsAuthors.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
