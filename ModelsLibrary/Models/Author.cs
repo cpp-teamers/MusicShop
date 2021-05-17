@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ModelsLibrary.Models
 {
-	[Table("Actors")]
+	[Table("Authors")]
     public class Author
     {
         [Key]

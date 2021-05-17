@@ -8,7 +8,7 @@ namespace ModelsLibrary.EF
 {
     public partial class ModelsManager : DbContext
     {
-        public ModelsManager() : base("name=ModelsManager") { }
+        public ModelsManager() : base("name=ModelsManager")  { }
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Discount> Discounts { get; set; }
