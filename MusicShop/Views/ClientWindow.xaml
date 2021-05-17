@@ -34,7 +34,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Background="AntiqueWhite">
-                    <TextBlock Text="Music Shop" HorizontalAlignment="Center" Margin="10" FontSize="28"/>
+                    <Image Source="../Pictures/Images/MusicShopLogo.png" Margin="7"/>
                 </Grid>
                 <ScrollViewer Grid.Column="1" Grid.Row="1" Background="#FFF1F1F1" Margin="0,0,10,0">
                     <StackPanel Margin="20 20">
@@ -75,7 +75,7 @@
 
                     <TextBlock DockPanel.Dock="Left" Text="Plate:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
 
-                    <Button x:Name="searchButton" Content="Search" DockPanel.Dock="Right" Margin="0 12 10 12" Width="100" FontSize="20" CommandParameter="{Binding Text, ElementName=plateField}" Command="{Binding SearchPlate}"/>
+                    <Button x:Name="searchButton" Content="Search" DockPanel.Dock="Right" Margin="0 5 20 5" Width="100" FontSize="20" CommandParameter="{Binding Text, ElementName=plateField}" Command="{Binding SearchPlate}" Style="{DynamicResource RoundButtonTemplate}"/>
 
                     <TextBox x:Name="plateField"  Margin="5 7" VerticalAlignment="Center" FontSize="20"/>
                 </DockPanel>
@@ -96,7 +96,7 @@
                     <TextBox x:Name="plateAmount"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Amount}"/>
 
                     <TextBlock DockPanel.Dock="Top" Text="Tracks:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <Button x:Name="buyButton" DockPanel.Dock="Bottom" Margin="5 10" Content="Buy" FontSize="20" BorderThickness="1"/>
+                    <Button x:Name="buyButton" DockPanel.Dock="Bottom" Margin="5" Content="Buy" FontSize="20" BorderThickness="1" Style="{DynamicResource RoundButtonTemplate}"/>
                     <ListView x:Name="trackList" Margin="5 0" ItemsSource="{Binding Tracks}" FontSize="15">
                         <ListView.View>
                             <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">

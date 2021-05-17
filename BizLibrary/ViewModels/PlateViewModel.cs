@@ -22,7 +22,8 @@ namespace BizLibrary.ViewModels
         public PlateViewModel(Plate plate)
         {
             _plate = plate;
-            _plate.Tracks = rep.TrackRepository.GetAllTracksByPlateId(_plate.Id);
+            if(plate != null)
+                _plate.Tracks = rep.TrackRepository.GetAllTracksByPlateId(_plate.Id);
         }
 
         public int Id
