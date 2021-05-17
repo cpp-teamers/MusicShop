@@ -11,7 +11,7 @@ namespace BizLibrary.Repositories.Interfaces
     {
         IEnumerable<Track> GetAllTracksByPlateId(int plateId);
         void AddTrack(Track track);
-        void ChangeTrack(Track track);
+        void ChangeTrack(Track changedTrack);
         void DelTrack(int trackId);
     }
 }

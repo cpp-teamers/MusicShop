@@ -9,8 +9,8 @@ namespace BizLibrary.Repositories.Interfaces
 {
     interface IDiscountRepository
     {
-        IEnumerable<Discount> GetAllDiscountsByEndDate(DateTime date);
-        IEnumerable<Discount> GetAllDiscountsByStartDate(DateTime endDate);
+        IEnumerable<Discount> GetAllDiscountsByEndDate(DateTime endDate);
+        IEnumerable<Discount> GetAllDiscountsByStartDate(DateTime startDate);
         void AddDiscount(Discount addedDiscount);
         void ChangeDiscount(Discount changedDiscount);
         void DelDiscount(int discountId);
