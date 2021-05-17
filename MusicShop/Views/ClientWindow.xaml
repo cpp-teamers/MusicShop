@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MusicShop.Views"
         xmlns:vm1="clr-namespace:MusicShop.ViewModels;assembly=BizLibrary"
         mc:Ignorable="d"
-        Title="MusicStore" Height="750" Width="1200"
+        Title="MusicStore" Height="750" Width="1190" MaxWidth="1190" MinWidth="1190" MinHeight="750" MaxHeight="750"
         FontFamily="The Medic Demo"
         WindowStartupLocation="CenterScreen"
         Icon="../Pictures/Icons/loginIco.ico"
@@ -31,12 +31,12 @@
                 <Grid Background="AntiqueWhite">
                     <TextBlock Text="Music Shop" HorizontalAlignment="Center" Margin="10" FontSize="28"/>
                 </Grid>
-                <ScrollViewer Grid.Column="1" Grid.Row="1" Background="#FFF1F1F1">
+                <ScrollViewer Grid.Column="1" Grid.Row="1" Background="#FFF1F1F1" Margin="0,0,10,0">
                     <StackPanel Margin="20 20">
-                        <ListView x:Name="ListViewPlats" ItemsSource="{Binding Plates}" SelectedItem="{Binding SelectedPlate}">
-                            <ItemsControl.ItemTemplate>
+                        <ListView x:Name="ListViewPlats" ItemsSource="{Binding Plates}" SelectedItem="{Binding SelectedPlate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#FFF1F1F1" BorderThickness="0" BorderBrush="#FFF1F1F1">
+                            <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Margin="10" Width="180" Height="230">
+                                    <Border Margin="10" Width="180" Height="240">
                                         <StackPanel>
                                             <Border Width="170" Height="170" CornerRadius="5" Margin="5">
                                                 <Border.Effect>
@@ -46,18 +46,18 @@
                                                     <ImageBrush ImageSource="{Binding AlbumImagePath}"/>
                                                 </Border.Background>
                                             </Border>
-                                            <TextBlock Margin="5" Text="{Binding Cost, StringFormat={}{0:C}}" FontSize="17" FontFamily="Franklin Gothic Medium"/>
-                                            <TextBlock Margin="5 0" Text="{Binding Name}" FontSize="15"/>
-                                            <TextBlock Margin="5 0" Text="{Binding Author}" FontSize="12"/>
+                                            <TextBlock Margin="5 0" Text="{Binding Cost, StringFormat={}{0:C}}" FontSize="17" FontFamily="Franklin Gothic Medium"/>
+                                            <TextBlock Margin="5 0" Text="{Binding Name}" FontSize="18"/>
+                                            <TextBlock Margin="5 0" Text="{Binding Author.Name}" FontSize="12"/>
                                         </StackPanel>
                                     </Border>
                                 </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel/>
                                 </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
+                            </ListView.ItemsPanel>
                         </ListView>
                     </StackPanel>
                 </ScrollViewer>
@@ -92,7 +92,14 @@
 
                     <TextBlock DockPanel.Dock="Top" Text="Tracks:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <Button x:Name="buyButton" DockPanel.Dock="Bottom" Margin="5 10" Content="Buy" FontSize="20" BorderThickness="1"/>
-                    <ListBox x:Name="trackList" Margin="5 0" ItemsSource="{Binding SelectedPlate.Tracks}" DisplayMemberPath="Name"/>
+                    <ListView x:Name="trackList" Margin="5 0" ItemsSource="{Binding Tracks}" FontSize="15">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="150" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Width="75" DisplayMemberBinding="{Binding Duration}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </DockPanel>
             </Grid>
         </TabItem>
