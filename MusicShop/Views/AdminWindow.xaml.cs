@@ -17,9 +17,9 @@ namespace MusicShop.Views
 	/// <summary>
 	/// Логика взаимодействия для ModeratorWindow.xaml
 	/// </summary>
-	public partial class ModeratorWindow : Window
+	public partial class AdminWindow : Window
 	{
-		public ModeratorWindow()
+		public AdminWindow()
 		{
 			InitializeComponent();
 		}
