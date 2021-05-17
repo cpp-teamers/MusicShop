@@ -28,7 +28,10 @@ namespace BizLibrary.ViewModels
             set
             {
                 _selectedGenre = value;
-                LoadPlatesByAuthorIdAndGenreId(SelectedAuthor.Id, SelectedGenre.Id);
+                if(SelectedAuthor == null)
+                    LoadPlatesByAuthorIdAndGenreId(-1, SelectedGenre.Id);
+                else
+                    LoadPlatesByAuthorIdAndGenreId(SelectedAuthor.Id, SelectedGenre.Id);
                 OnPropertyChanged("SelectedGenre");
             }
         }
