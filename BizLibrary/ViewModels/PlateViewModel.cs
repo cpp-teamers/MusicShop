@@ -8,15 +8,21 @@ using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using BizLibrary.Repositories.Implementations;
+using System.Windows;
+
 
 namespace BizLibrary.ViewModels
 {
     public class PlateViewModel : INotifyPropertyChanged
     {
+        private AllRepositories rep = new AllRepositories();
+        
         private Plate _plate;
         public PlateViewModel(Plate plate)
         {
             _plate = plate;
+            _plate.Tracks = rep.TrackRepository.GetAllTracksByPlateId(_plate.Id);
         }
 
         public int Id
@@ -117,6 +123,41 @@ namespace BizLibrary.ViewModels
                 _plate.RealCost = value;
                 OnPropertyChanged("RealCost");
             }
+        }
+
+        public Author Author
+        {
+            get { return _plate.Author; }
+            set
+            {
+                _plate.Author = value;
+                OnPropertyChanged("Author");
+            }
+        }
+
+        public ModelsLibrary.Models.Publisher Publisher
+        {
+            get { return _plate.Publisher; }
+            set
+            {
+                _plate.Publisher = value;
+                OnPropertyChanged("Publisher");
+            }
+        }
+
+        public IEnumerable<Track> Tracks
+        {
+            get { return _plate.Tracks; }
+            set
+            {
+                _plate.Tracks = value;
+                OnPropertyChanged("Tracks");
+            }
+        }
+
+        private void LoadTracks()
+        {
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
