@@ -11,6 +11,11 @@
         WindowStartupLocation="CenterScreen"
         Icon="../Pictures/Icons/loginIco.ico"
         Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+    </Window.Resources>
     <TabControl>
         <TabItem>
             <TabItem.Header>
@@ -94,7 +99,7 @@
                     <Button x:Name="buyButton" DockPanel.Dock="Bottom" Margin="5 10" Content="Buy" FontSize="20" BorderThickness="1"/>
                     <ListView x:Name="trackList" Margin="5 0" ItemsSource="{Binding Tracks}" FontSize="15">
                         <ListView.View>
-                            <GridView>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                                 <GridViewColumn Width="150" DisplayMemberBinding="{Binding Name}"/>
                                 <GridViewColumn Width="75" DisplayMemberBinding="{Binding Duration}"/>
                             </GridView>
