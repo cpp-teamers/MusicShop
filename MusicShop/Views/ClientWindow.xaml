@@ -70,7 +70,7 @@
 
                     <TextBlock DockPanel.Dock="Left" Text="Plate:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
 
-                    <Button x:Name="searchButton" Content="Search" DockPanel.Dock="Right" Margin="0 12 10 12" Width="100" FontSize="20"/>
+                    <Button x:Name="searchButton" Content="Search" DockPanel.Dock="Right" Margin="0 12 10 12" Width="100" FontSize="20" CommandParameter="{Binding Text, ElementName=plateField}" Command="{Binding SearchPlate}"/>
 
                     <TextBox x:Name="plateField"  Margin="5 7" VerticalAlignment="Center" FontSize="20"/>
                 </DockPanel>
@@ -79,10 +79,10 @@
                     <TextBox x:Name="plateName"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Name}"/>
 
                     <TextBlock DockPanel.Dock="Top" Text="Author:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <TextBox x:Name="plateAuthor"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding AuthorId}"/>
+                    <TextBox x:Name="plateAuthor"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Author.Name}"/>
 
                     <TextBlock DockPanel.Dock="Top" Text="Publisher:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <TextBox x:Name="platePublisher"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Publisher}"/>
+                    <TextBox x:Name="platePublisher"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Publisher.Name}"/>
 
                     <TextBlock DockPanel.Dock="Top" Text="Price:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <TextBox x:Name="platePrice"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Cost, StringFormat={}{0:C}}"/>
@@ -90,8 +90,8 @@
                     <TextBlock DockPanel.Dock="Top" Text="Amount:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <TextBox x:Name="plateAmount"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Amount}"/>
 
-                    <TextBlock x:Name="plateNameTextBlock" DockPanel.Dock="Top" Text="Tracks:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <Button x:Name="buyButton" DockPanel.Dock="Bottom" Margin="5 10" Content="Buy" FontSize="20" BorderThickness="1" CommandParameter="{Binding Text, ElementName=plateNameTextBlock}" Command="{Binding SearchPlate}"/>
+                    <TextBlock DockPanel.Dock="Top" Text="Tracks:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
+                    <Button x:Name="buyButton" DockPanel.Dock="Bottom" Margin="5 10" Content="Buy" FontSize="20" BorderThickness="1"/>
                     <ListBox x:Name="trackList" Margin="5 0" ItemsSource="{Binding SelectedPlate.Tracks}" DisplayMemberPath="Name"/>
                 </DockPanel>
             </Grid>
