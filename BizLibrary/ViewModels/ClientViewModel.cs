@@ -63,10 +63,12 @@ namespace BizLibrary.ViewModels
             {
                 return _searchPlate ?? (_searchPlate = new RelayCommand(obj =>
                 {
-                    string Text = (string)obj;
-                    if (!string.IsNullOrWhiteSpace(Text))
+                    string text = obj.ToString().Trim();
+                    if (!string.IsNullOrWhiteSpace(text))
                     {
-                        MessageBox.Show(Text);
+                        var plate = rep.PlateRepository.GetPlateByName(text);
+                        Plates.Clear();
+                        Plates.Add(new PlateViewModel(plate));
                     }
                 }));
             }
