@@ -90,8 +90,8 @@
                     <TextBlock DockPanel.Dock="Top" Text="Amount:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
                     <TextBox x:Name="plateAmount"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Amount}"/>
 
-                    <TextBlock DockPanel.Dock="Top" Text="Tracks:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
-                    <Button x:Name="buyButton" DockPanel.Dock="Bottom" Margin="5 10" Content="Buy" FontSize="20" BorderThickness="1"/>
+                    <TextBlock x:Name="plateNameTextBlock" DockPanel.Dock="Top" Text="Tracks:" FontSize="20" VerticalAlignment="Center" Margin="5 0"/>
+                    <Button x:Name="buyButton" DockPanel.Dock="Bottom" Margin="5 10" Content="Buy" FontSize="20" BorderThickness="1" CommandParameter="{Binding plateNameTextBlock.Text}" Command="{Binding SearchPlate}"/>
                     <ListBox x:Name="trackList" Margin="5 0" ItemsSource="{Binding SelectedPlate.Tracks}" DisplayMemberPath="Name"/>
                 </DockPanel>
             </Grid>

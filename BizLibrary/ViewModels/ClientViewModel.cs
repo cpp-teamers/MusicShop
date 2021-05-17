@@ -56,6 +56,19 @@ namespace BizLibrary.ViewModels
             }
         }
 
+        private RelayCommand _searchPlate;
+        public RelayCommand SearchPlate
+        {
+            get
+            {
+                return _searchPlate ?? (_searchPlate = new RelayCommand(obj =>
+                {
+
+                    
+                }));
+            }
+        }
+
         private void LoadTasks()
         {
             Plates.Clear();
