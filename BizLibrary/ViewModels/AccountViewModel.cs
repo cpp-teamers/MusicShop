@@ -11,12 +11,21 @@ using System.Linq;
 using HashGenerators;
 using BizLibrary.Repositories.Interfaces;
 using BizLibrary.Repositories.Implementations;
+using HashGenerators;
+using System;
 
 namespace MusicShop.ViewModels
 {
 	public class AccountViewModel : INotifyPropertyChanged
     {
         IAccountRepository _accountRepo = new AccountRepository();
+        IRoleRepository _roleRepo = new RoleRepository();
+
+        enum Role_Id
+        {
+            Client = 1,
+            Admin = 2
+        };
 
         private Account _defaultAcc = new Account()
         {
@@ -128,6 +137,9 @@ namespace MusicShop.ViewModels
                 });
             }
         }
+
+        
+
         #region 'back' button manipulations
 
         private void OutvisBackButton(Border borderWithButton)
@@ -141,7 +153,6 @@ namespace MusicShop.ViewModels
         #endregion
 
         #region Into Registration Logic
-
         private ICommand _execRegistation;
         public ICommand ExecRegistation
         {
@@ -158,7 +169,12 @@ namespace MusicShop.ViewModels
                             Email = ValidateEmail(),
                             Phone = ValidatePhone()
                         };
-
+                        var isSuchLogin = _accountRepo.GetAllAccounts().Where(a => a.Login == Login).FirstOrDefault();
+						if (isSuchLogin !=  null)
+						{
+                            throw new Exception("Such Login Already Exist");
+						}
+                        
                         _accountRepo.AddAccount(newAcc);
                     }
                     catch (System.Exception err)
@@ -170,8 +186,80 @@ namespace MusicShop.ViewModels
 			}
 		}
         #endregion
-       
-        #region Validation
+
+        #region Into Loginization Logic
+
+        private int tryCounter = 3;
+
+        private ICommand _execLoginization;
+        public ICommand ExecLoginization
+        {
+			get
+			{
+                return _execLoginization ?? new RelayCommand(obj =>
+                {
+					try
+					{
+						if (string.IsNullOrWhiteSpace(_login))
+						{
+                            throw new System.Exception("Please enter the login!");
+						}
+                        if (string.IsNullOrWhiteSpace(_password))
+                        {
+                            throw new System.Exception("Please enter the password!");
+                        }
+
+                        string hashedPasswordToCheck = MD5Generator.ProduceMD5Hash(_password);
+
+                        Account accountByLogin = _accountRepo.GetAllAccounts().Where(acc => acc.Login == _login).FirstOrDefault();
+						if (accountByLogin == null)
+						{
+                            throw new System.Exception("User with this login has not been found!");
+						}
+                        if (accountByLogin.Password != hashedPasswordToCheck)
+                        {
+                            throw new System.Exception($"Password is incorrect! Chances: {--tryCounter}");
+                        }
+
+
+                        var entryRole = _roleRepo.GetAllRoles().Where(role => role.Id == accountByLogin.RoleId).FirstOrDefault();
+						if (entryRole == null)
+						{
+                            throw new System.Exception("Cannot proccess user with invalid role! Please add such role.");
+						}
+
+
+
+						switch (entryRole.Id)
+						{
+                            case (int)Role_Id.Client:
+                                MessageBox.Show($"Welcome {entryRole.Name}!", "Client", MessageBoxButton.OK, MessageBoxImage.Information);
+                                break;
+                            case (int)Role_Id.Admin:
+                                MessageBox.Show($"Welcome {entryRole.Name}!", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+                                break;
+                            default:
+                                throw new System.Exception("Cannot proccess user with invalid role! Please add such role.");
+						}
+
+					}
+					catch (System.Exception err)
+                    {
+                        MessageBox.Show($"{err.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    finally
+					{
+						if (tryCounter == 0)
+						{
+                            MessageBox.Show("The amount of tryes 0. App will be closed", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+					}
+                });
+			}
+		}
+        #endregion
+
+        #region Reg Validation
 
         private string ValidateLogin()
         {
