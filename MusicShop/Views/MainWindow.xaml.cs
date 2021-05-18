@@ -22,8 +22,7 @@ namespace MusicShop.Views
         public MainWindow()
         {
             InitializeComponent();
-            //Window windowToOpen;
-            this.DataContext = new AccountViewModel();
+            DataContext = new AccountViewModel(this);
         }
 	}
 }

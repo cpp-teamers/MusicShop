@@ -1,4 +1,5 @@
-﻿using MusicShop.Commands;
+﻿using ModelsLibrary.Models;
+using MusicShop.Commands;
 using System.ComponentModel;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
@@ -7,16 +8,31 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
+using HashGenerators;
+using System;
 using MusicShop.Repositories.Interfaces;
 using MusicShop.Repositories.Implementations;
-using ModelsLibrary.Models;
-using HashGenerators;
+using MusicShop.Views;
 
 namespace MusicShop.ViewModels
 {
-	public class AccountViewModel : INotifyPropertyChanged
+    public class AccountViewModel : INotifyPropertyChanged
     {
         IAccountRepository _accountRepo = new AccountRepository();
+        IRoleRepository _roleRepo = new RoleRepository();
+
+        public MainWindow AuthorisationWin { get; }
+
+        public AccountViewModel(Window importedWin)
+		{
+            AuthorisationWin = importedWin as MainWindow;
+		}
+
+        enum Role_Id
+        {
+            Client = 1,
+            Admin = 2
+        };
 
         private Account _defaultAcc = new Account()
         {
@@ -25,29 +41,29 @@ namespace MusicShop.ViewModels
             Email = "Email",
             Phone = "Phone",
         };
-        public Account DefaultAcc 
+        public Account DefaultAcc
         {
-			get
-			{
+            get
+            {
                 return _defaultAcc;
             }
             set
-			{
+            {
                 _defaultAcc = value;
                 OnPropertyChanged(nameof(DefaultAcc));
-			}
+            }
         }
 
         public string _login;
         public string Login
-		{
-			get { return _login; }
-			set
-			{
+        {
+            get { return _login; }
+            set
+            {
                 _login = value;
                 OnPropertyChanged(nameof(Login));
             }
-		}
+        }
 
         public string _password;
         public string Password
@@ -128,6 +144,9 @@ namespace MusicShop.ViewModels
                 });
             }
         }
+
+
+
         #region 'back' button manipulations
 
         private void OutvisBackButton(Border borderWithButton)
@@ -141,37 +160,132 @@ namespace MusicShop.ViewModels
         #endregion
 
         #region Into Registration Logic
-
         private ICommand _execRegistation;
         public ICommand ExecRegistation
         {
-			get
-			{
+            get
+            {
                 return _execRegistation ?? new RelayCommand(obj =>
                 {
-					try
-					{
+                    try
+                    {
                         Account newAcc = new Account()
                         {
                             Login = ValidateLogin(),
                             Password = MD5Generator.ProduceMD5Hash(ValidatePassword()),
                             Email = ValidateEmail(),
-                            Phone = ValidatePhone()
+                            Phone = ValidatePhone(),
+                            RoleId = (int)Role_Id.Client
                         };
+                        var isSuchLogin = _accountRepo.GetAllAccounts().Where(a => a.Login == Login).FirstOrDefault();
+                        if (isSuchLogin != null)
+                        {
+                            throw new Exception("Such Login Already Exist");
+                        }
 
                         _accountRepo.AddAccount(newAcc);
+                        ClearFields();
+                        
+                        MessageBox.Show($"Your account has been registered!", "Success",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     catch (System.Exception err)
-					{
-                        MessageBox.Show($"{err.Message}", "Error",
+                    {
+                        MessageBox.Show($"{err.InnerException?.Message ?? err.Message}", "Error",
                             MessageBoxButton.OK, MessageBoxImage.Error);
-					}
+                    }
                 });
-			}
-		}
+            }
+        }
         #endregion
-       
-        #region Validation
+
+        #region Into Loginization Logic
+
+        private int tryCounter = 3;
+
+        private ICommand _execLoginization;
+        public ICommand ExecLoginization
+        {
+            get
+            {
+                return _execLoginization ?? new RelayCommand(obj =>
+                {
+                    try
+                    {
+                        if (string.IsNullOrWhiteSpace(_login))
+                        {
+                            throw new System.Exception("Please enter the login!");
+                        }
+                        if (string.IsNullOrWhiteSpace(_password))
+                        {
+                            throw new System.Exception("Please enter the password!");
+                        }
+
+                        string hashedPasswordToCheck = MD5Generator.ProduceMD5Hash(_password);
+
+                        Account accountByLogin = _accountRepo.GetAllAccounts().Where(acc => acc.Login == _login).FirstOrDefault();
+                        if (accountByLogin == null)
+                        {
+                            throw new System.Exception("User with this login has not been found!");
+                        }
+                        if (accountByLogin.Password != hashedPasswordToCheck)
+                        {
+                            throw new System.Exception($"Password is incorrect! Chances: {--tryCounter}");
+                        }
+
+
+                        var entryRole = _roleRepo.GetAllRoles().Where(role => role.Id == accountByLogin.RoleId).FirstOrDefault();
+                        if (entryRole == null)
+                        {
+                            throw new System.Exception("Cannot proccess user with invalid role! Please add such role.");
+                        }
+
+                        Window winToShow = null;
+
+                        ClearFields();
+                        switch (entryRole.Id)
+                        {
+                            case (int)Role_Id.Client:
+                                MessageBox.Show($"Welcome {entryRole.Name}!", "Client", MessageBoxButton.OK, MessageBoxImage.Information);
+                                winToShow = new ClientWindow();
+                                break;
+                            case (int)Role_Id.Admin:
+                                MessageBox.Show($"Welcome {entryRole.Name}!", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
+                                winToShow = new AdminWindow();
+                                break;
+                            default:
+                                throw new System.Exception("Cannot proccess user with invalid role! Please add such role.");
+                        }
+
+                        var authorizationWin = (obj as MainWindow);
+                        
+                        // hiding login/registration window
+                        authorizationWin.Visibility = Visibility.Hidden;
+                        
+                        winToShow.ShowDialog();
+
+                        // unhiding login/registration window
+                        authorizationWin.Visibility = Visibility.Visible;
+                    }
+                    catch (System.Exception err)
+                    {
+                        MessageBox.Show($"{err.InnerException?.Message ?? err.Message}", "Error",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    finally
+                    {
+                        if (tryCounter == 0)
+                        {
+                            MessageBox.Show("The amount of tryes 0. App will be closed", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            AuthorisationWin.Close();
+                        }
+                    }
+                });
+            }
+        }
+        #endregion
+
+        #region Reg Validation
 
         private string ValidateLogin()
         {
@@ -293,7 +407,15 @@ namespace MusicShop.ViewModels
             }
         }
         #endregion
-        
+
+        private void ClearFields()
+		{
+            Login = String.Empty;
+            Password = String.Empty;
+            Email = String.Empty;
+            Phone = String.Empty;
+		}
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
