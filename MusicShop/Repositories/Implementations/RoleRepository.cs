@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BizLibrary.Repositories.Interfaces;
+using MusicShop.Repositories.Interfaces;
 using ModelsLibrary.Models;
 using ModelsLibrary.EF;
 
