@@ -38,7 +38,7 @@ namespace MusicShop.ViewModels
             Plates = new ObservableCollection<Plate>();
             _plate = new Plate();
             _plate.Tracks = _rep.TrackRepository.GetAllTracksByPlateId(_plate.Id);
-            MessageBox.Show(_plate.Tracks.Count().ToString());
+            //MessageBox.Show(_plate.Tracks.Count().ToString()); // - Dev Kho changed
         }
         
         public int Id
