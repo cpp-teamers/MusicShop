@@ -57,7 +57,7 @@ namespace MusicShop.ViewModels
         public Author SelectedAuthor
         {
             get { return _selectedAuthor; }
-            set 
+            set
             {
                 _selectedAuthor = value;
                 OnPropertyChanged("SelectedAuthor");
@@ -70,12 +70,13 @@ namespace MusicShop.ViewModels
             {
                 return _addAuthor ?? (new RelayCommand(obj =>
                 {
-                    Author author = new Author() { Id = 0, Name="New Author"};
+                    Author author = new Author() { Id = 0, Name = "New Author" };
                     Authors.Add(author);
                     LoadAuthors();
                     OnPropertyChanged("Authors");
                 }
-            ));}
+            ));
+            }
         }
         private RelayCommand _delAuthor;
         public RelayCommand DelAuthor
