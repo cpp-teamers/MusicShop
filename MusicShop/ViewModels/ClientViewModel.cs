@@ -28,7 +28,7 @@ namespace MusicShop.ViewModels
             set
             {
                 _selectedGenre = value;
-                if(SelectedAuthor == null)
+                if (SelectedAuthor == null)
                     LoadPlatesByAuthorIdAndGenreId(-1, SelectedGenre.Id);
                 else
                     LoadPlatesByAuthorIdAndGenreId(SelectedAuthor.Id, SelectedGenre.Id);
@@ -104,7 +104,7 @@ namespace MusicShop.ViewModels
                 platesFormDbFiltered = rep.PlateRepository.GetAllPlatesByAuthorId(aid);
             else
                 platesFormDbFiltered = rep.PlateRepository.GetAllPlates();
-            foreach(var plate in platesFormDbFiltered)
+            foreach (var plate in platesFormDbFiltered)
             {
                 Plates.Add(new PlateViewModel(plate));
             }
