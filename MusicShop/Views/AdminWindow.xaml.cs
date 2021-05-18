@@ -23,7 +23,12 @@ namespace MusicShop.Views
 		public AdminWindow()
 		{
 			InitializeComponent();
-			this.DataContext = new PlateViewModel();
+			this.DataContext = new AdminViewModel();
 		}
-	}
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+			if(authorsList.Items.Count > 0)
+				authorsList.SelectedIndex = 0;
+        }
+    }
 }

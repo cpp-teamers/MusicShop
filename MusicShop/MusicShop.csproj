@@ -109,6 +109,7 @@
     <Compile Include="Repositories\Interfaces\ISaleRepository.cs" />
     <Compile Include="Repositories\Interfaces\ITrackRepository.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\AuthorViewModel.cs" />
     <Compile Include="ViewModels\ClientViewModel.cs" />
     <Compile Include="ViewModels\DiscountViewModel.cs" />
