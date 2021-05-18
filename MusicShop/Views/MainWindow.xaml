@@ -51,7 +51,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Window.Resources>
 
     <Grid x:Name="ContainElems">
@@ -110,8 +109,26 @@
                     Command="{Binding ExecRegistation}"/>
 
             </DockPanel>
-        <DockPanel Grid.Row="1" x:Name="LoginPanel">
+        <DockPanel Grid.Row="1" x:Name="LoginPanel" VerticalAlignment="Center" Visibility="Hidden">
+            <TextBox x:Name="loginFieldin_LoginInterface"
+                     Style="{StaticResource MyWaterMarkStyle}" 
+                     Tag="{Binding DefaultAcc.Login}"
+                     Text="{Binding Login}"
+                     DockPanel.Dock="Top" >
+            </TextBox>
+            <TextBox x:Name="passField_LoginInterface" 
+                         Style="{StaticResource MyWaterMarkStyle}"
+                         Tag="{Binding DefaultAcc.Password}"
+                         Text="{Binding Password}"
+                         DockPanel.Dock="Top">
+            </TextBox>
 
+            <Button DockPanel.Dock="Top"  
+                    Style="{StaticResource RoundButton}" 
+                    Padding="10" Width="200" 
+                    Content="Accept" 
+                    Command="{Binding ExecLoginization}"
+                    />
         </DockPanel>
         
     </Grid>
