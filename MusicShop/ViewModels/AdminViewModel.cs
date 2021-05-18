@@ -10,7 +10,7 @@ namespace MusicShop.ViewModels
 {
     public class AdminViewModel : INotifyPropertyChanged
     {
-        public PlateViewModel pvm = new PlateViewModel();
+        //public PlateViewModel pvm = new PlateViewModel();
         public AuthorViewModel avm = new AuthorViewModel();
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

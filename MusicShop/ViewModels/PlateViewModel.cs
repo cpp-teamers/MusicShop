@@ -18,27 +18,13 @@ namespace MusicShop.ViewModels
     {
         private AllRepositories _rep = new AllRepositories();
         ObservableCollection<Plate> Plates { get; set; }
-        private Plate _plate1;
-        public Plate SelectedPlate
-        {
-            get { return _plate1; }
-            set 
-            {
-                _plate1 = value;
-                OnPropertyChanged("SelectedPlate");
-            }
-        }
-        public PlateViewModel()
-        {
-            Plates = new ObservableCollection<Plate>();
-        }
+
         private Plate _plate;
         public PlateViewModel(Plate plate)
         {
             Plates = new ObservableCollection<Plate>();
-            _plate = new Plate();
+            _plate = plate;
             _plate.Tracks = _rep.TrackRepository.GetAllTracksByPlateId(_plate.Id);
-            //MessageBox.Show(_plate.Tracks.Count().ToString()); // - Dev Kho changed
         }
         
         public int Id
@@ -183,7 +169,6 @@ namespace MusicShop.ViewModels
                        RealCost = 0
                     };
                     Plates.Add(plate);
-                    MessageBox.Show("!");
                     OnPropertyChanged("Plates");
                 }
             ));
