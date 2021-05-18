@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -47,6 +47,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -66,6 +67,28 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="EF\ModelsManager.cs" />
+    <Compile Include="Migrations\202105120946330_FirstMigration.cs" />
+    <Compile Include="Migrations\202105120946330_FirstMigration.Designer.cs">
+      <DependentUpon>202105120946330_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105121346010_PlateChanged.cs" />
+    <Compile Include="Migrations\202105121346010_PlateChanged.Designer.cs">
+      <DependentUpon>202105121346010_PlateChanged.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105131522388_AccountRoleAdded.cs" />
+    <Compile Include="Migrations\202105131522388_AccountRoleAdded.Designer.cs">
+      <DependentUpon>202105131522388_AccountRoleAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105171007349_VirtualProperties.cs" />
+    <Compile Include="Migrations\202105171007349_VirtualProperties.Designer.cs">
+      <DependentUpon>202105171007349_VirtualProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105171010427_ActorsAuthors.cs" />
+    <Compile Include="Migrations\202105171010427_ActorsAuthors.Designer.cs">
+      <DependentUpon>202105171010427_ActorsAuthors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\Implementations\AccountRepository.cs" />
     <Compile Include="Repositories\Implementations\AllRepositories.cs" />
     <Compile Include="Repositories\Implementations\AuthorRepository.cs" />
@@ -112,10 +135,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resourses\ClientDictionary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Resourses\RoundButtonSheet.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -151,6 +170,21 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202105120946330_FirstMigration.resx">
+      <DependentUpon>202105120946330_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105121346010_PlateChanged.resx">
+      <DependentUpon>202105121346010_PlateChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105131522388_AccountRoleAdded.resx">
+      <DependentUpon>202105131522388_AccountRoleAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105171007349_VirtualProperties.resx">
+      <DependentUpon>202105171007349_VirtualProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105171010427_ActorsAuthors.resx">
+      <DependentUpon>202105171010427_ActorsAuthors.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -192,6 +226,15 @@
     <Resource Include="Pictures\Images\Phone.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Pictures\Images\AbbeyRoad.jpg" />
+    <Resource Include="Pictures\Images\Awake.jpg" />
+    <Resource Include="Pictures\Images\Comatose.jpg" />
+    <Resource Include="Pictures\Images\Help!.jpg" />
+    <Resource Include="Pictures\Images\LetItBe.jpg" />
+    <Resource Include="Pictures\Images\Rise.jpg" />
+    <Resource Include="Pictures\Images\TheBeatles.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\HashGenerators\HashGenerators.csproj">
       <Project>{678562f3-9b78-4b48-a7b1-de24ac90e755}</Project>
       <Name>HashGenerators</Name>
@@ -202,38 +245,34 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Pictures\Images\AbbeyRoad.jpg" />
-    <Resource Include="Pictures\Images\Awake.jpg" />
-    <Resource Include="Pictures\Images\Comatose.jpg" />
-    <Resource Include="Pictures\Images\Help!.jpg" />
-    <Resource Include="Pictures\Images\LetItBe.jpg" />
-    <Resource Include="Pictures\Images\Rise.jpg" />
-    <Resource Include="Pictures\Images\TheBeatles.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Pictures\Icons\backArrow.ico" />
-    <Resource Include="Pictures\Images\plate.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Pictures\Images\MusicShopLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Pictures\Images\Listen.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Pictures\Images\Vislovo.jpg" />
+    <Folder Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\Images\client.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Pictures\Icons\admin.jpg" />
+    <Resource Include="Pictures\Images\defaultAlbumImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\Listen.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\MusicShopLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\plate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\Vislovo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\your_addHere.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\Icons\backArrow.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Pictures\Images\defaultAlbumImage.png" />
+    <Resource Include="Pictures\Icons\admin.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

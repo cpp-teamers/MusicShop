@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicShop.Views"
-        xmlns:vm1="clr-namespace.ViewModels;assembly=BizLibrary"
         mc:Ignorable="d"
         Title="Admin" Height="750" Width="1200" MinHeight="500" MinWidth="700">
     <TabControl>
