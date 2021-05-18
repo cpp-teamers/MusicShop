@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
@@ -62,6 +65,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Repositories\Implementations\AccountRepository.cs" />
+    <Compile Include="Repositories\Implementations\AllRepositories.cs" />
+    <Compile Include="Repositories\Implementations\AuthorRepository.cs" />
+    <Compile Include="Repositories\Implementations\DiscountRepository.cs" />
+    <Compile Include="Repositories\Implementations\GenreRepository.cs" />
+    <Compile Include="Repositories\Implementations\PlateRepository.cs" />
+    <Compile Include="Repositories\Implementations\PublisherRepository.cs" />
+    <Compile Include="Repositories\Implementations\RoleRepository.cs" />
+    <Compile Include="Repositories\Implementations\SaleRepository.cs" />
+    <Compile Include="Repositories\Implementations\TrackRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IAccountRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IAuthorRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IDiscountRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IGenreRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IPlateRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IPublisherRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IRoleRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ISaleRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ITrackRepository.cs" />
+    <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\AuthorViewModel.cs" />
+    <Compile Include="ViewModels\ClientViewModel.cs" />
+    <Compile Include="ViewModels\DiscountViewModel.cs" />
+    <Compile Include="ViewModels\GenreViewModel.cs" />
+    <Compile Include="ViewModels\PlateViewModel.cs" />
+    <Compile Include="ViewModels\PublisherViewModel.cs" />
+    <Compile Include="ViewModels\RoleViewModel.cs" />
+    <Compile Include="ViewModels\SaleViewModel.cs" />
+    <Compile Include="ViewModels\TrackViewModel.cs" />
     <Compile Include="Views\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
@@ -78,6 +111,10 @@
     <Page Include="Resourses\ButtonStyleSheet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resourses\ClientDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resourses\RoundButtonSheet.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -155,9 +192,13 @@
     <Resource Include="Pictures\Images\Phone.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BizLibrary\BizLibrary.csproj">
-      <Project>{fd0ac8f0-64c7-4f36-8dd1-5f7f53128eee}</Project>
-      <Name>BizLibrary</Name>
+    <ProjectReference Include="..\HashGenerators\HashGenerators.csproj">
+      <Project>{678562f3-9b78-4b48-a7b1-de24ac90e755}</Project>
+      <Name>HashGenerators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelsLibrary\ModelsLibrary.csproj">
+      <Project>{37c84e76-e731-4799-8b10-dae6dfba2474}</Project>
+      <Name>ModelsLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +222,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\Images\Vislovo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\client.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Icons\admin.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Icons\backArrow.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Images\defaultAlbumImage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
