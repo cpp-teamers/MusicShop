@@ -228,7 +228,7 @@ namespace MusicShop.ViewModels
                         {
                             throw new System.Exception("User with this login has not been found!");
                         }
-                        if (accountByLogin.Password != hashedPasswordToCheck)
+                        if (accountByLogin.Password != hashedPasswordToCheck.ToLower())
                         {
                             throw new System.Exception($"Password is incorrect! Chances: {--tryCounter}");
                         }
