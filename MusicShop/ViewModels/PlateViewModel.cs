@@ -26,7 +26,7 @@ namespace MusicShop.ViewModels
             _plate = plate;
             _plate.Tracks = _rep.TrackRepository.GetAllTracksByPlateId(_plate.Id);
         }
-        
+        public Plate GetPlate { get { return _plate; } }
         public int Id
         {
             get { return _plate.Id; }
@@ -148,32 +148,7 @@ namespace MusicShop.ViewModels
         {
             
         }
-        private RelayCommand _addPlate;
-        public RelayCommand AddPlate
-        {
-            get
-            {
-                return _addPlate ?? (new RelayCommand(obj =>
-                {
-                    var author = obj as Author;
-                    DateTime date = new DateTime(1900, 1, 1);
-                    Plate plate = new Plate() {
-                       AlbumImagePath = @"..\..\MusicShop\Pictures\Images\defaultAlbumImage.png",
-                       Cost = 0,
-                       PublishDate = date,
-                       Amount = 0,
-                       AuthorId = author.Id,
-                       GenreId = GenreId,
-                       Name = "New Plate",
-                       PublisherId = PublisherId,
-                       RealCost = 0
-                    };
-                    Plates.Add(plate);
-                    OnPropertyChanged("Plates");
-                }
-            ));
-            }
-        }
+
         private void LoadPlates()
         {
             Plates.Clear();
