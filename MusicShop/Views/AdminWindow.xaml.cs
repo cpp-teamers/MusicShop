@@ -1,4 +1,5 @@
-﻿using MusicShop.ViewModels;
+﻿using ModelsLibrary.Models;
+using MusicShop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace MusicShop.Views
 		{
 			InitializeComponent();
 			this.DataContext = new AdminViewModel();
+			publishersComboBox.IsEnabled = false;
 		}
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -32,5 +34,19 @@ namespace MusicShop.Views
 			if (genresList.Items.Count > 0)
 				genresList.SelectedIndex = 0;
         }
-    }
+
+        private void ListViewPlats_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+			int index = ListViewPlats.SelectedIndex;
+			if(index != -1)
+            {
+				Plate plate = (ListViewPlats.Items[index] as PlateViewModel).GetPlate;
+				if (plate.Id == -1)
+					publishersComboBox.IsEnabled = true;
+				else
+					publishersComboBox.IsEnabled = false;
+            }
+
+		}
+	}
 }

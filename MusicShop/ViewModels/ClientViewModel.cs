@@ -11,6 +11,8 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using MusicShop.Repositories.Implementations;
 using System.Collections.Generic;
+using System;
+using Microsoft.Win32;
 
 namespace MusicShop.ViewModels
 {
@@ -19,8 +21,9 @@ namespace MusicShop.ViewModels
         public ObservableCollection<PlateViewModel> Plates { get; set; }
         public ObservableCollection<GenreViewModel> Genres { get; set; }
         public ObservableCollection<AuthorViewModel> Authors { get; set; }
+        public ObservableCollection<Publisher> Publishers { get; set; }
         private AllRepositories rep = new AllRepositories();
-
+        
         private GenreViewModel _selectedGenre;
         public GenreViewModel SelectedGenre
         {
@@ -55,10 +58,74 @@ namespace MusicShop.ViewModels
             set
             {
                 _selectedPlate = value;
+                Plate plate = _selectedPlate.GetPlate;
+                if(plate.Id == -1)
+                {
+                    /* OpenFileDialog ofd = new OpenFileDialog();
+                    ofd.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
+                    if (!ofd.ShowDialog().HasValue)
+                    {
+                        string sourcePath = ofd.FileName;
+                        string nameImage = ofd.SafeFileName;
+                        string destinationPath = $@"..\Pictures\Images\{nameImage}.jpg";
+                        System.IO.File.Copy(sourcePath, destinationPath);
+                        plate.AlbumImagePath = destinationPath;
+                        MessageBox.Show("Image was successfully added");
+                    } */
+
+                }
                 OnPropertyChanged("SelectedPlate");
             }
         }
-
+        private void LoadPublishers()
+        {
+            Publishers.Clear();
+            var publishers = rep.PublisherRepository.GetAllPublishers();
+            foreach (var p in publishers)
+                Publishers.Add(p);
+        }
+        private RelayCommand _addPlate;
+        public RelayCommand AddPlate
+        {
+            get
+            {
+                return _addPlate ?? (new RelayCommand(obj =>
+                {
+                    var author = obj as Author;
+                    DateTime date = new DateTime(1900, 1, 1);
+                    Plate plate = new Plate()
+                    {
+                        Id = -1,
+                        AlbumImagePath = @"..\Pictures\Images\defaultAlbumImage.png",
+                        Cost = 0,
+                        PublishDate = date,
+                        Amount = 0,
+                        AuthorId = SelectedAuthor.Id,
+                        GenreId = SelectedGenre.Id,
+                        Name = "New Plate",
+                        PublisherId = 1,
+                        RealCost = 0
+                    };
+                    Plates.Add(new PlateViewModel(plate));
+                    OnPropertyChanged("Plates");
+                }
+            ));
+            }
+        }
+        private RelayCommand _savePlate;
+        public RelayCommand SavePlate
+        {
+            get
+            {
+                return _savePlate ?? (new RelayCommand(obj =>
+                {
+                    rep.PlateRepository.AddPlate(SelectedPlate.GetPlate);
+                    MessageBox.Show($"{SelectedPlate.GetPlate.Name} was successfully added!");
+                    OnPropertyChanged("Plates");
+                }
+            ));
+            }
+        }
         private RelayCommand _searchPlate;
         public RelayCommand SearchPlate
         {
@@ -115,9 +182,11 @@ namespace MusicShop.ViewModels
             Plates = new ObservableCollection<PlateViewModel>();
             Genres = new ObservableCollection<GenreViewModel>();
             Authors = new ObservableCollection<AuthorViewModel>();
+            Publishers = new ObservableCollection<Publisher>();
             LoadGenres();
             LoadAuthors();
             LoadPlates();
+            LoadPublishers();
         }
 
         private void LoadGenres()

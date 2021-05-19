@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicShop.Views"
         mc:Ignorable="d"
-        Title="Admin" Height="750" Width="1400" MinHeight="500" MinWidth="700" Foreground="LightBlue"
-        Loaded="Window_Loaded">
+        Title="Admin" Height="750" Width="1500" MinHeight="500" MinWidth="800" Foreground="LightBlue"
+        Loaded="Window_Loaded" Icon="..\Pictures\Icons\admin.ico">
+    <Window.Resources>
+        <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+    </Window.Resources>
     <TabControl>
+
         <TabItem>
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
@@ -21,7 +27,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
@@ -30,29 +36,66 @@
                 </Grid>
                 <GroupBox  Grid.Row="1" Grid.Column="0" VerticalAlignment="Top">
                     <StackPanel>
-                    <TextBlock DockPanel.Dock="Left" Text="Author:" FontSize="20" Margin="5 0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="Author:" FontSize="20" Margin="5 0"/>
                         <ComboBox x:Name="authorsList" Margin="5 10" ItemsSource="{Binding cvm.Authors}" DisplayMemberPath="Name" VerticalAlignment="Center"
                               FontSize="20" SelectedItem="{Binding cvm.SelectedAuthor}"/>
                         <TextBlock DockPanel.Dock="Left" Text="Genre:" FontSize="20" Margin="5 0"/>
                         <ComboBox x:Name="genresList" Margin="5 10" ItemsSource="{Binding cvm.Genres}" DisplayMemberPath="Name" VerticalAlignment="Center"
                               FontSize="20" SelectedItem="{Binding cvm.SelectedGenre}"/>
+                        <GroupBox>
+                            <Grid DataContext="{Binding cvm.SelectedPlate}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="116*"/>
+                                    <ColumnDefinition Width="27*"/>
+                                    <ColumnDefinition Width="204*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Name:" FontSize="20" Margin="5 0"
+                                           Grid.Row="0" Grid.Column="0"/>
 
+                                <TextBox x:Name="plateName"   FontSize="15"  Text="{Binding Name}" Margin="16,7,15,7"
+                                         Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
 
-                        <Button x:Name="searchButton" Content="Search" DockPanel.Dock="Right" Margin="4" FontSize="20" Style="{DynamicResource RoundButtonTemplate}"/>
-                </StackPanel>
+                                <TextBlock Text="Author:" FontSize="20" VerticalAlignment="Center" Margin="5,10,5,9"
+                                           Grid.Row="1" Grid.Column="0"/>
+                                <TextBox x:Name="plateAuthor"  Margin="16,7,15,7" FontSize="15" Text="{Binding Author.Name}"
+                                         Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+                                <TextBlock Text="Publisher:" FontSize="20" VerticalAlignment="Center" Margin="5,10,5,9"
+                                           Grid.Row="2" Grid.Column="0"/>
+                                <TextBox x:Name="platePublisher"  Margin="16,7,15,7" FontSize="15" Text="{Binding Publisher.Name}"
+                                         Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+                                <TextBlock Text="Price:" FontSize="20" VerticalAlignment="Center" Margin="5,10,5,9"
+                                           Grid.Row="3" Grid.Column="0"/>
+                                <TextBox x:Name="platePrice"  Margin="16,7,15,7" FontSize="15" Text="{Binding Cost, StringFormat={}{0:C}}"
+                                         Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+                                <TextBlock Text="Amount:" FontSize="20" VerticalAlignment="Center" Margin="5,10,5,9"
+                                           Grid.Row="4" Grid.Column="0"/>
+                                <TextBox x:Name="plateAmount"  Margin="16,7,15,7" FontSize="15" Text="{Binding Amount}"
+                                         Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"/>
+                            </Grid>
+                        </GroupBox>
+                        <ComboBox x:Name="publishersComboBox" ItemsSource="{Binding cvm.Publishers}" DisplayMemberPath="Name"/>
+                        <Button x:Name="changePublisher" Content="Apply" Margin="5" Style="{Binding RoundButtonSheet}"/>
+                    </StackPanel>
                 </GroupBox>
                 <GroupBox Grid.Column="1">
                     <Label Content="Plates" FontSize="20" DockPanel.Dock="Top" VerticalAlignment="Bottom"/>
                 </GroupBox>
                 <GroupBox Grid.Row="1" Grid.Column="1">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <ScrollViewer Background="#FFF1F1F1" Margin="0,0,10,0" Grid.Row="0">
+                    <ScrollViewer Background="#FFF1F1F1" Margin="0,0,10,0" Grid.Row="0">
                         <StackPanel Margin="20 20">
-                            <ListView x:Name="ListViewPlats" ItemsSource="{Binding cvm.Plates}" SelectedItem="{Binding cvm.SelectedPlate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#FFF1F1F1" BorderThickness="0" BorderBrush="#FFF1F1F1" ScrollViewer.CanContentScroll="False">
+                            <ListView x:Name="ListViewPlats" ItemsSource="{Binding cvm.Plates}" SelectedItem="{Binding cvm.SelectedPlate}" SelectionChanged="ListViewPlats_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#FFF1F1F1" BorderThickness="0" BorderBrush="#FFF1F1F1" ScrollViewer.CanContentScroll="False">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Border Margin="10" Width="180" Height="240">
@@ -80,62 +123,15 @@
                             </ListView>
                         </StackPanel>
                     </ScrollViewer>
-                        <GroupBox  Grid.Row="1">
-                            <Grid Grid.Row="1" Grid.Column="0" DataContext="{Binding cvm.SelectedPlate}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Text="Name:" FontSize="20" Margin="5 0"
-                                           Grid.Row="0" Grid.Column="0"/>
-                                <TextBox x:Name="plateName"   FontSize="20"  Text="{Binding cvm.Name}" 
-                                         Grid.Row="0" Grid.Column="1"/>
-
-                                <TextBlock Text="Author:" FontSize="20" VerticalAlignment="Center" Margin="5 0"
-                                           Grid.Row="1" Grid.Column="0"/>
-                                <TextBox x:Name="plateAuthor"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding cvm.Author.Name}"
-                                         Grid.Row="1" Grid.Column="2"/>
-
-                                <TextBlock Text="Publisher:" FontSize="20" VerticalAlignment="Center" Margin="5 0"
-                                           Grid.Row="2" Grid.Column="0"/>
-                                <TextBox x:Name="platePublisher"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Publisher.Name}"
-                                         Grid.Row="2" Grid.Column="1"/>
-
-                                <TextBlock DockPanel.Dock="Top" Text="Price:" FontSize="20" VerticalAlignment="Center" Margin="5 0"
-                                           Grid.Row="3" Grid.Column="0"/>
-                                <TextBox x:Name="platePrice"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Cost, StringFormat={}{0:C}}"
-                                         Grid.Row="3" Grid.Column="1"/>
-
-                                <TextBlock DockPanel.Dock="Top" Text="Amount:" FontSize="20" VerticalAlignment="Center" Margin="5 0"
-                                           Grid.Row="4" Grid.Column="0"/>
-                                <TextBox x:Name="plateAmount"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Amount}"
-                                         Grid.Row="4" Grid.Column="1"/>
-
-                                <TextBlock DockPanel.Dock="Top" Text="Tracks:" FontSize="20" VerticalAlignment="Center" Margin="5 0"
-                                           Grid.Row="5" Grid.Column="0"/>
-                                
-                            </Grid>
-
-                        </GroupBox>
-                    </Grid>
                 </GroupBox>
                 <GroupBox Grid.Column="2">
-                    <Label x:Name="adminNameLabel" Content="{Binding account.Login}"/>
+                    <Label x:Name="adminNameLabel" Content="{Binding accountvm.Login}"/>
                 </GroupBox>
                 <DockPanel Grid.Column="2" Grid.Row="1" VerticalAlignment="Top">
                     <Button x:Name="addPlate" Content="Add plate" Style="{DynamicResource RoundButtonTemplate}" DockPanel.Dock="Top"
-                            Command="{Binding AddPlate}" CommandParameter="{Binding ElementName=SelectedAuthor}"/>
+                            Command="{Binding cvm.AddPlate}" CommandParameter="{Binding ElementName=SelectedAuthor}"/>
                     <Button x:Name="delPlate" Content="Delete plate" Style="{DynamicResource RoundButtonTemplate}" DockPanel.Dock="Top"
-                            Command="{Binding DeletePlate}"/>
+                            Command="{Binding cvm.DeletePlate}"/>
                     <Button x:Name="savePlate" Content="Save plate" Style="{DynamicResource RoundButtonTemplate}" DockPanel.Dock="Top"/>
                     <GroupBox>
                         <Image Source="../Pictures/Images/your_addHere.jpg"/>
@@ -147,11 +143,11 @@
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Pictures/Images/client.jpg" Width="20"/>
-                        <TextBlock Margin="3">Clients</TextBlock>
+                    <TextBlock Margin="3">Clients</TextBlock>
                 </StackPanel>
             </TabItem.Header>
             <Grid>
-                
+
             </Grid>
         </TabItem>
     </TabControl>
