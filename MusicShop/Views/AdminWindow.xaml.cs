@@ -29,6 +29,8 @@ namespace MusicShop.Views
         {
 			if(authorsList.Items.Count > 0)
 				authorsList.SelectedIndex = 0;
+			if (genresList.Items.Count > 0)
+				genresList.SelectedIndex = 0;
         }
     }
 }
