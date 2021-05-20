@@ -60,6 +60,17 @@ namespace MusicShop.ViewModels
             }
         }
 
+        private int _id;
+        public int Id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                OnPropertyChanged(nameof(Id));
+            }
+        }
+
         private string _login;
         public string Login
         {

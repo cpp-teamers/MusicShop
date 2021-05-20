@@ -31,6 +31,7 @@ namespace MusicShop.Repositories.Implementations
             plate.PublisherId = changedPlate.PublisherId;
             plate.RealCost = changedPlate.RealCost;
             _modelManager.Entry(plate).State = EntityState.Modified;
+            _modelManager.SaveChanges();
         }
 
         public void DelPlate(int plateId)
