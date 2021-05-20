@@ -20,6 +20,7 @@ namespace MusicShop.ViewModels
     {
         IAccountRepository _accountRepo = new AccountRepository();
         IRoleRepository _roleRepo = new RoleRepository();
+        private Account _account;
 
         public MainWindow AuthorisationWin { get; }
 
@@ -27,6 +28,11 @@ namespace MusicShop.ViewModels
 		{
             AuthorisationWin = importedWin as MainWindow;
 		}
+
+        public AccountViewModel(Account account)
+        {
+            _account = account;
+        }
 
         enum Role_Id
         {
@@ -247,7 +253,7 @@ namespace MusicShop.ViewModels
                         {
                             case (int)Role_Id.Client:
                                 MessageBox.Show($"Welcome {entryRole.Name}!", "Client", MessageBoxButton.OK, MessageBoxImage.Information);
-                                winToShow = new ClientWindow();
+                                winToShow = new ClientWindow(accountByLogin);
                                 break;
                             case (int)Role_Id.Admin:
                                 MessageBox.Show($"Welcome {entryRole.Name}!", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);

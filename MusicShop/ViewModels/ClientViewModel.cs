@@ -23,6 +23,17 @@ namespace MusicShop.ViewModels
         public ObservableCollection<AuthorViewModel> Authors { get; set; }
         public ObservableCollection<Publisher> Publishers { get; set; }
         private AllRepositories rep = new AllRepositories();
+
+        private AccountViewModel _selectedAccount;
+        public AccountViewModel SelectedAccount 
+        {
+            get { return _selectedAccount; }
+            set
+            {
+                _selectedAccount = value;
+                OnPropertyChanged("SelectedAccount");
+            }
+        }
         
         private GenreViewModel _selectedGenre;
         public GenreViewModel SelectedGenre
@@ -72,7 +83,6 @@ namespace MusicShop.ViewModels
                         plate.AlbumImagePath = destinationPath;
                         MessageBox.Show("Image was successfully added");
                     } */
-
                 }
                 OnPropertyChanged("SelectedPlate");
             }
@@ -175,6 +185,19 @@ namespace MusicShop.ViewModels
             {
                 Plates.Add(new PlateViewModel(plate));
             }
+        }
+
+        public ClientViewModel(Account account)
+        {
+            Plates = new ObservableCollection<PlateViewModel>();
+            Genres = new ObservableCollection<GenreViewModel>();
+            Authors = new ObservableCollection<AuthorViewModel>();
+            Publishers = new ObservableCollection<Publisher>();
+            SelectedAccount = new AccountViewModel(account);
+            LoadGenres();
+            LoadAuthors();
+            LoadPlates();
+            LoadPublishers();
         }
 
         public ClientViewModel()
