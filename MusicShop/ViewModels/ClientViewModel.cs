@@ -293,7 +293,6 @@ namespace MusicShop.ViewModels
             Account = new AccountViewModel2(account);
             SelectedAccount = Account;
             Publishers = new ObservableCollection<PublisherViewModel>();
-            SelectedAccount = new AccountViewModel(account);
             LoadGenres();
             LoadAuthors();
             LoadPlates();
