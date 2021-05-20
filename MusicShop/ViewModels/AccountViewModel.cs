@@ -20,7 +20,6 @@ namespace MusicShop.ViewModels
     {
         IAccountRepository _accountRepo = new AccountRepository();
         IRoleRepository _roleRepo = new RoleRepository();
-        private Account _account;
 
         public MainWindow AuthorisationWin { get; }
 
@@ -28,11 +27,6 @@ namespace MusicShop.ViewModels
 		{
             AuthorisationWin = importedWin as MainWindow;
 		}
-
-        public AccountViewModel(Account account)
-        {
-            _account = account;
-        }
 
         enum Role_Id
         {
@@ -67,7 +61,7 @@ namespace MusicShop.ViewModels
             set
             {
                 _id = value;
-                OnPropertyChanged(nameof(Id));
+                OnPropertyChanged("Id");
             }
         }
 
@@ -78,7 +72,7 @@ namespace MusicShop.ViewModels
             set
             {
                 _login = value;
-                OnPropertyChanged(nameof(Login));
+                OnPropertyChanged("Login");
             }
         }
 
@@ -89,7 +83,7 @@ namespace MusicShop.ViewModels
             set
             {
                 _password = value;
-                OnPropertyChanged(nameof(Password));
+                OnPropertyChanged("Password");
             }
         }
 
@@ -100,7 +94,7 @@ namespace MusicShop.ViewModels
             set
             {
                 _email = value;
-                OnPropertyChanged(nameof(Email));
+                OnPropertyChanged("Email");
             }
         }
 
@@ -111,7 +105,7 @@ namespace MusicShop.ViewModels
             set
             {
                 _phone = value;
-                OnPropertyChanged(nameof(Phone));
+                OnPropertyChanged("Phone");
             }
         }
 

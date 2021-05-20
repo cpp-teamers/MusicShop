@@ -111,9 +111,36 @@
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Pictures/Images/dia.png" Width="20"/>
-                    <TextBlock Margin="3">Statistics</TextBlock>
+                    <TextBlock Margin="3">Home</TextBlock>
                 </StackPanel>
             </TabItem.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <WrapPanel Grid.Row="1" Grid.Column="0" DataContext="{Binding Account}">
+                    <TextBlock Text="Login:" FontSize="20" VerticalAlignment="Center" Margin="5 0" Width="300"/>
+                    <TextBox x:Name="clientName"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Login}" Width="275"/>
+
+                    <TextBlock Text="Email:" FontSize="20" VerticalAlignment="Center" Margin="5 0" Width="300"/>
+                    <TextBox x:Name="clientEmail"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Email}" Width="275"/>
+
+                    <TextBlock Text="Phone:" FontSize="20" VerticalAlignment="Center" Margin="5 0" Width="300"/>
+                    <TextBox x:Name="clientPhone"  Margin="5 7" FontSize="20" DockPanel.Dock="Top" IsReadOnly="True" Text="{Binding Phone}" Width="275"/>
+                    
+                </WrapPanel>
+                <ListView x:Name="salesList" Margin="5 0" ItemsSource="{Binding Sales}" FontSize="15" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                    <ListView.View>
+                        <GridView >
+                            <GridViewColumn Width="150" DisplayMemberBinding="{Binding Plate.Name}" Header="Plate"/>
+                            <GridViewColumn Width="150" DisplayMemberBinding="{Binding Price}" Header="Price"/>
+                            <GridViewColumn Width="200" DisplayMemberBinding="{Binding DateOfSale}" Header="Date Of Deal"/>
+                            <GridViewColumn Width="150" DisplayMemberBinding="{Binding AmountOfSales}" Header="Amount"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
         </TabItem>
     </TabControl>
 </Window>

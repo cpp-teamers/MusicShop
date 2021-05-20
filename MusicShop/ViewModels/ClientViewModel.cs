@@ -21,9 +21,10 @@ namespace MusicShop.ViewModels
         public ObservableCollection<PlateViewModel> Plates { get; set; }
         public ObservableCollection<GenreViewModel> Genres { get; set; }
         public ObservableCollection<AuthorViewModel> Authors { get; set; }
+        public ObservableCollection<SaleViewModel> Sales { get; set; }
         public ObservableCollection<Publisher> Publishers { get; set; }
         private AllRepositories rep = new AllRepositories();
-        private Account _account;
+        public AccountViewModel2 Account { get; set; }
 
         
         private GenreViewModel _selectedGenre;
@@ -50,6 +51,17 @@ namespace MusicShop.ViewModels
                 _selectedAuthor = value;
                 LoadPlatesByAuthorIdAndGenreId(SelectedAuthor.Id, SelectedGenre.Id);
                 OnPropertyChanged("SelectedAuthor");
+            }
+        }
+
+        private AccountViewModel2 _selectedAccount;
+        public AccountViewModel2 SelectedAccount
+        {
+            get { return _selectedAccount; }
+            set
+            {
+                _selectedAccount = value;
+                OnPropertyChanged("SelectedAccount");
             }
         }
 
@@ -149,9 +161,9 @@ namespace MusicShop.ViewModels
                             Sale sale = new Sale()
                             {
                                 Id = 0,
-                                AccountId = _account.Id,
+                                AccountId = Account.Id,
                                 PlateId = SelectedPlate.Id,
-                                DateOfSale = DateTime.Today,
+                                DateOfSale = DateTime.Now,
                                 AmountOfSales = 1,
                                 Price = SelectedPlate.Cost
                             };
@@ -173,6 +185,7 @@ namespace MusicShop.ViewModels
 
                             MessageBox.Show($"Thanks for the buying {SelectedPlate.Name}!!!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             LoadPlates();
+                            LoadSales();
                         }
                         else
                         {
@@ -186,7 +199,15 @@ namespace MusicShop.ViewModels
                 }));
             }
         }
-
+        private void LoadSales()
+        {
+            Sales.Clear();
+            var salesFromDb = rep.SaleRepository.GetAllSalesByAccoutId(Account.Id);
+            foreach (var sale in salesFromDb)
+            {
+                Sales.Add(new SaleViewModel(sale));
+            }
+        }
         private void LoadPlates()
         {
             Plates.Clear();
@@ -221,11 +242,14 @@ namespace MusicShop.ViewModels
             Genres = new ObservableCollection<GenreViewModel>();
             Authors = new ObservableCollection<AuthorViewModel>();
             Publishers = new ObservableCollection<Publisher>();
-            _account = account;
+            Sales = new ObservableCollection<SaleViewModel>();
+            Account = new AccountViewModel2(account);
+            SelectedAccount = Account;
             LoadGenres();
             LoadAuthors();
             LoadPlates();
             LoadPublishers();
+            LoadSales();
         }
 
         public ClientViewModel()
