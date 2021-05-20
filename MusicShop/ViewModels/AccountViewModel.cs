@@ -54,7 +54,7 @@ namespace MusicShop.ViewModels
             }
         }
 
-        public string _login;
+        private string _login;
         public string Login
         {
             get { return _login; }
@@ -65,7 +65,7 @@ namespace MusicShop.ViewModels
             }
         }
 
-        public string _password;
+        private string _password;
         public string Password
         {
             get { return _password; }
@@ -76,7 +76,7 @@ namespace MusicShop.ViewModels
             }
         }
 
-        public string _email;
+        private string _email;
         public string Email
         {
             get { return _email; }
@@ -87,7 +87,7 @@ namespace MusicShop.ViewModels
             }
         }
 
-        public string _phone;
+        private string _phone;
         public string Phone
         {
             get { return _phone; }
@@ -172,7 +172,7 @@ namespace MusicShop.ViewModels
                         Account newAcc = new Account()
                         {
                             Login = ValidateLogin(),
-                            Password = MD5Generator.ProduceMD5Hash(ValidatePassword()),
+                            Password = MD5Generator.ProduceMD5Hash(ValidatePassword()).ToLower(),
                             Email = ValidateEmail(),
                             Phone = ValidatePhone(),
                             RoleId = (int)Role_Id.Client
