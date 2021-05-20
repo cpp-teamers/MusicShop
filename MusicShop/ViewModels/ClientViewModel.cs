@@ -21,7 +21,7 @@ namespace MusicShop.ViewModels
         public ObservableCollection<PlateViewModel> Plates { get; set; }
         public ObservableCollection<GenreViewModel> Genres { get; set; }
         public ObservableCollection<AuthorViewModel> Authors { get; set; }
-        public ObservableCollection<Publisher> Publishers { get; set; }
+        public ObservableCollection<PublisherViewModel> Publishers { get; set; }
         private AllRepositories rep = new AllRepositories();
 
         private AccountViewModel _selectedAccount;
@@ -61,7 +61,16 @@ namespace MusicShop.ViewModels
                 OnPropertyChanged("SelectedAuthor");
             }
         }
-
+        private PublisherViewModel _selectedPublisher;
+        public PublisherViewModel SelectedPublisher
+        {
+            get { return _selectedPublisher; }
+            set
+            {
+                _selectedPublisher = value;
+                OnPropertyChanged("SelectedPublisher");
+            }
+        }
         private PlateViewModel _selectedPlate;
         public PlateViewModel SelectedPlate
         {
@@ -92,7 +101,7 @@ namespace MusicShop.ViewModels
             Publishers.Clear();
             var publishers = rep.PublisherRepository.GetAllPublishers();
             foreach (var p in publishers)
-                Publishers.Add(p);
+                Publishers.Add(new PublisherViewModel(p));
         }
         private RelayCommand _addPlate;
         public RelayCommand AddPlate
@@ -113,11 +122,29 @@ namespace MusicShop.ViewModels
                         AuthorId = SelectedAuthor.Id,
                         GenreId = SelectedGenre.Id,
                         Name = "New Plate",
-                        PublisherId = 1,
+                        PublisherId = -1,
                         RealCost = 0
                     };
                     Plates.Add(new PlateViewModel(plate));
                     OnPropertyChanged("Plates");
+                }
+            ));
+            }
+        }
+        private RelayCommand _delPlate;
+        public RelayCommand DeletePlate
+        {
+            get
+            {
+                return _delPlate ?? (new RelayCommand(obj =>
+                {
+                    if(SelectedPlate.Id != -1)
+                    {
+                        string name = SelectedPlate.Name;
+                        rep.PlateRepository.DelPlate(SelectedPlate.Id);
+                        MessageBox.Show($"{name} was successfully deleted!");
+                        LoadPlates();
+                    }
                 }
             ));
             }
@@ -129,9 +156,30 @@ namespace MusicShop.ViewModels
             {
                 return _savePlate ?? (new RelayCommand(obj =>
                 {
-                    rep.PlateRepository.AddPlate(SelectedPlate.GetPlate);
-                    MessageBox.Show($"{SelectedPlate.GetPlate.Name} was successfully added!");
-                    OnPropertyChanged("Plates");
+                   // try
+                   // {
+                        if (SelectedAuthor.Id == -1)
+                            throw new Exception("You didn't choose author!");
+                        else if (SelectedGenre.Id == -1)
+                            throw new Exception("You didn't choose genre!");
+                        else if (SelectedPublisher.Id == -1)
+                            throw new Exception("You didn't choose publisher!");
+                        else 
+                        {
+                            SelectedPlate.GetPlate.GenreId = SelectedGenre.Id;
+                            SelectedPlate.GetPlate.PublisherId = SelectedPublisher.Id;
+                            SelectedPlate.GetPlate.AuthorId = SelectedAuthor.Id;
+
+                            rep.PlateRepository.AddPlate(SelectedPlate.GetPlate);
+                            MessageBox.Show($"{SelectedPlate.GetPlate.Name} was successfully added!");
+                            OnPropertyChanged("Plates");
+                        }
+
+                   // }
+                //    catch(Exception err)
+                //    {
+                 //       MessageBox.Show(err.Message, "Attention!", MessageBoxButton.OK, MessageBoxImage.Error);
+                //    }
                 }
             ));
             }
@@ -192,7 +240,7 @@ namespace MusicShop.ViewModels
             Plates = new ObservableCollection<PlateViewModel>();
             Genres = new ObservableCollection<GenreViewModel>();
             Authors = new ObservableCollection<AuthorViewModel>();
-            Publishers = new ObservableCollection<Publisher>();
+            Publishers = new ObservableCollection<PublisherViewModel>();
             SelectedAccount = new AccountViewModel(account);
             LoadGenres();
             LoadAuthors();
@@ -205,7 +253,7 @@ namespace MusicShop.ViewModels
             Plates = new ObservableCollection<PlateViewModel>();
             Genres = new ObservableCollection<GenreViewModel>();
             Authors = new ObservableCollection<AuthorViewModel>();
-            Publishers = new ObservableCollection<Publisher>();
+            Publishers = new ObservableCollection<PublisherViewModel>();
             LoadGenres();
             LoadAuthors();
             LoadPlates();

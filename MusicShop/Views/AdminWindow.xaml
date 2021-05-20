@@ -39,9 +39,15 @@
                         <TextBlock DockPanel.Dock="Left" Text="Author:" FontSize="20" Margin="5 0"/>
                         <ComboBox x:Name="authorsList" Margin="5 10" ItemsSource="{Binding cvm.Authors}" DisplayMemberPath="Name" VerticalAlignment="Center"
                               FontSize="20" SelectedItem="{Binding cvm.SelectedAuthor}"/>
+                        
                         <TextBlock DockPanel.Dock="Left" Text="Genre:" FontSize="20" Margin="5 0"/>
                         <ComboBox x:Name="genresList" Margin="5 10" ItemsSource="{Binding cvm.Genres}" DisplayMemberPath="Name" VerticalAlignment="Center"
                               FontSize="20" SelectedItem="{Binding cvm.SelectedGenre}"/>
+                        
+                        <TextBlock DockPanel.Dock="Left" Text="Publisher:" FontSize="20" Margin="5 0"/>
+                        <ComboBox x:Name="publishersList" Margin="5 10" ItemsSource="{Binding cvm.Publishers}" DisplayMemberPath="Name" VerticalAlignment="Center"
+                              FontSize="20" SelectedItem="{Binding cvm.SelectedPublisher}"/>
+
                         <GroupBox>
                             <Grid DataContext="{Binding cvm.SelectedPlate}">
                                 <Grid.RowDefinitions>
@@ -64,16 +70,6 @@
                                 <TextBox x:Name="plateName"   FontSize="15"  Text="{Binding Name}" Margin="16,7,15,7"
                                          Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
 
-                                <TextBlock Text="Author:" FontSize="20" VerticalAlignment="Center" Margin="5,10,5,9"
-                                           Grid.Row="1" Grid.Column="0"/>
-                                <TextBox x:Name="plateAuthor"  Margin="16,7,15,7" FontSize="15" Text="{Binding Author.Name}"
-                                         Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
-
-                                <TextBlock Text="Publisher:" FontSize="20" VerticalAlignment="Center" Margin="5,10,5,9"
-                                           Grid.Row="2" Grid.Column="0"/>
-                                <TextBox x:Name="platePublisher"  Margin="16,7,15,7" FontSize="15" Text="{Binding Publisher.Name}"
-                                         Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
-
                                 <TextBlock Text="Price:" FontSize="20" VerticalAlignment="Center" Margin="5,10,5,9"
                                            Grid.Row="3" Grid.Column="0"/>
                                 <TextBox x:Name="platePrice"  Margin="16,7,15,7" FontSize="15" Text="{Binding Cost, StringFormat={}{0:C}}"
@@ -85,8 +81,6 @@
                                          Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"/>
                             </Grid>
                         </GroupBox>
-                        <ComboBox x:Name="publishersComboBox" ItemsSource="{Binding cvm.Publishers}" DisplayMemberPath="Name"/>
-                        <Button x:Name="changePublisher" Content="Apply" Margin="5" Style="{Binding RoundButtonSheet}"/>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Grid.Column="1">
@@ -95,7 +89,9 @@
                 <GroupBox Grid.Row="1" Grid.Column="1">
                     <ScrollViewer Background="#FFF1F1F1" Margin="0,0,10,0" Grid.Row="0">
                         <StackPanel Margin="20 20">
-                            <ListView x:Name="ListViewPlats" ItemsSource="{Binding cvm.Plates}" SelectedItem="{Binding cvm.SelectedPlate}" SelectionChanged="ListViewPlats_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#FFF1F1F1" BorderThickness="0" BorderBrush="#FFF1F1F1" ScrollViewer.CanContentScroll="False">
+                            <ListView x:Name="ListViewPlats" ItemsSource="{Binding cvm.Plates}" SelectedItem="{Binding cvm.SelectedPlate}" 
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#FFF1F1F1" BorderThickness="0" 
+                                      BorderBrush="#FFF1F1F1" ScrollViewer.CanContentScroll="False">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Border Margin="10" Width="180" Height="240">
@@ -132,7 +128,8 @@
                             Command="{Binding cvm.AddPlate}" CommandParameter="{Binding ElementName=SelectedAuthor}"/>
                     <Button x:Name="delPlate" Content="Delete plate" Style="{DynamicResource RoundButtonTemplate}" DockPanel.Dock="Top"
                             Command="{Binding cvm.DeletePlate}"/>
-                    <Button x:Name="savePlate" Content="Save plate" Style="{DynamicResource RoundButtonTemplate}" DockPanel.Dock="Top"/>
+                    <Button x:Name="savePlate" Content="Save plate" Style="{DynamicResource RoundButtonTemplate}" DockPanel.Dock="Top"
+                            Command="{Binding cvm.SavePlate}"/>
                     <GroupBox>
                         <Image Source="../Pictures/Images/your_addHere.jpg"/>
                     </GroupBox>
