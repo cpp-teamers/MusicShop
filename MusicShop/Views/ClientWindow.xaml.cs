@@ -12,15 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MusicShop.ViewModels;
+using ModelsLibrary.Models;
 
 namespace MusicShop.Views
 {
 	public partial class ClientWindow : Window
 	{
-		public ClientWindow()
+		public ClientWindow(Account account)
 		{
 			InitializeComponent();
-			this.DataContext = new ClientViewModel();
+			ClientViewModel cl = new ClientViewModel(account);
 		}
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
