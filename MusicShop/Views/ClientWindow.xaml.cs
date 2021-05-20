@@ -21,7 +21,7 @@ namespace MusicShop.Views
 		public ClientWindow(Account account)
 		{
 			InitializeComponent();
-			ClientViewModel cl = new ClientViewModel(account);
+			this.DataContext = new ClientViewModel(account);
 		}
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

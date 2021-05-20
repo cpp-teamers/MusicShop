@@ -1,4 +1,4 @@
-﻿using ModelsLibrary.Models;
+using ModelsLibrary.Models;
 using MusicShop.Commands;
 using System.ComponentModel;
 using System.Net.Mail;
@@ -21,19 +21,11 @@ namespace MusicShop.ViewModels
         public ObservableCollection<PlateViewModel> Plates { get; set; }
         public ObservableCollection<GenreViewModel> Genres { get; set; }
         public ObservableCollection<AuthorViewModel> Authors { get; set; }
+        public ObservableCollection<SaleViewModel> Sales { get; set; }
         public ObservableCollection<PublisherViewModel> Publishers { get; set; }
         private AllRepositories rep = new AllRepositories();
+        public AccountViewModel2 Account { get; set; }
 
-        private AccountViewModel _selectedAccount;
-        public AccountViewModel SelectedAccount 
-        {
-            get { return _selectedAccount; }
-            set
-            {
-                _selectedAccount = value;
-                OnPropertyChanged("SelectedAccount");
-            }
-        }
         
         private GenreViewModel _selectedGenre;
         public GenreViewModel SelectedGenre
@@ -61,6 +53,17 @@ namespace MusicShop.ViewModels
                 OnPropertyChanged("SelectedAuthor");
             }
         }
+        private AccountViewModel2 _selectedAccount;
+        public AccountViewModel2 SelectedAccount
+        {
+            get { return _selectedAccount; }
+            set
+            {
+                _selectedAccount = value;
+                OnPropertyChanged("SelectedAccount");
+            }
+        }
+        
         private PublisherViewModel _selectedPublisher;
         public PublisherViewModel SelectedPublisher
         {
@@ -78,21 +81,6 @@ namespace MusicShop.ViewModels
             set
             {
                 _selectedPlate = value;
-                Plate plate = _selectedPlate.GetPlate;
-                if(plate.Id == -1)
-                {
-                    /* OpenFileDialog ofd = new OpenFileDialog();
-                    ofd.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
-                    if (!ofd.ShowDialog().HasValue)
-                    {
-                        string sourcePath = ofd.FileName;
-                        string nameImage = ofd.SafeFileName;
-                        string destinationPath = $@"..\Pictures\Images\{nameImage}.jpg";
-                        System.IO.File.Copy(sourcePath, destinationPath);
-                        plate.AlbumImagePath = destinationPath;
-                        MessageBox.Show("Image was successfully added");
-                    } */
-                }
                 OnPropertyChanged("SelectedPlate");
             }
         }
@@ -156,8 +144,8 @@ namespace MusicShop.ViewModels
             {
                 return _savePlate ?? (new RelayCommand(obj =>
                 {
-                   // try
-                   // {
+                    try
+                    {
                         if (SelectedAuthor.Id == -1)
                             throw new Exception("You didn't choose author!");
                         else if (SelectedGenre.Id == -1)
@@ -175,11 +163,11 @@ namespace MusicShop.ViewModels
                             OnPropertyChanged("Plates");
                         }
 
-                   // }
-                //    catch(Exception err)
-                //    {
-                 //       MessageBox.Show(err.Message, "Attention!", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    }
+                    }
+                    catch(Exception err)
+                    {
+                        MessageBox.Show(err.Message, "Attention!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             ));
             }
@@ -207,6 +195,67 @@ namespace MusicShop.ViewModels
             }
         }
 
+        private RelayCommand _buyCommand;
+        public RelayCommand BuyCommand
+        {
+            get
+            {
+                return _buyCommand ?? (_buyCommand = new RelayCommand(obj =>
+                {
+                    if(SelectedPlate != null)
+                    {
+                        if(SelectedPlate.Amount != 0)
+                        {
+                            Sale sale = new Sale()
+                            {
+                                Id = 0,
+                                AccountId = Account.Id,
+                                PlateId = SelectedPlate.Id,
+                                DateOfSale = DateTime.Now,
+                                AmountOfSales = 1,
+                                Price = SelectedPlate.Cost
+                            };
+                            rep.SaleRepository.AddSale(sale);
+                            Plate plate = new Plate()
+                            {
+                                Id = SelectedPlate.Id,
+                                Name = SelectedPlate.Name,
+                                Amount = SelectedPlate.Amount - 1,
+                                PublishDate = SelectedPlate.PublishDate,
+                                Cost = SelectedPlate.Cost,
+                                AlbumImagePath = SelectedPlate.AlbumImagePath,
+                                RealCost = SelectedPlate.RealCost,
+                                AuthorId = SelectedPlate.AuthorId,
+                                PublisherId = SelectedPlate.PublisherId,
+                                GenreId = SelectedPlate.GenreId
+                            };
+                            rep.PlateRepository.ChangePlate(plate);
+
+                            MessageBox.Show($"Thanks for the buying {SelectedPlate.Name}!!!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            LoadPlates();
+                            LoadSales();
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Sorry we didn`t have that plates", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"You didn`t select any plates", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }));
+            }
+        }
+        private void LoadSales()
+        {
+            Sales.Clear();
+            var salesFromDb = rep.SaleRepository.GetAllSalesByAccoutId(Account.Id);
+            foreach (var sale in salesFromDb)
+            {
+                Sales.Add(new SaleViewModel(sale));
+            }
+        }
         private void LoadPlates()
         {
             Plates.Clear();
@@ -240,12 +289,16 @@ namespace MusicShop.ViewModels
             Plates = new ObservableCollection<PlateViewModel>();
             Genres = new ObservableCollection<GenreViewModel>();
             Authors = new ObservableCollection<AuthorViewModel>();
+            Sales = new ObservableCollection<SaleViewModel>();
+            Account = new AccountViewModel2(account);
+            SelectedAccount = Account;
             Publishers = new ObservableCollection<PublisherViewModel>();
             SelectedAccount = new AccountViewModel(account);
             LoadGenres();
             LoadAuthors();
             LoadPlates();
             LoadPublishers();
+            LoadSales();
         }
 
         public ClientViewModel()
