@@ -23,9 +23,12 @@ namespace MusicShop.ViewModels
         public ObservableCollection<AuthorViewModel> Authors { get; set; }
         public ObservableCollection<SaleViewModel> Sales { get; set; }
         public ObservableCollection<PublisherViewModel> Publishers { get; set; }
+        public ObservableCollection<Discount> Discounts{ get; set; }
+
         private AllRepositories rep = new AllRepositories();
         public AccountViewModel2 Account { get; set; }
-
+        public DateTime StartDate { get; set; } = new DateTime(2021, 1, 1);
+        public decimal SalesPrice { get; set; }
         
         private GenreViewModel _selectedGenre;
         public GenreViewModel SelectedGenre
@@ -74,6 +77,16 @@ namespace MusicShop.ViewModels
                 OnPropertyChanged("SelectedPublisher");
             }
         }
+        private Discount _selectedDiscount;
+        public Discount SelectedDiscount
+        {
+            get { return _selectedDiscount; }
+            set
+            {
+                _selectedDiscount = value;
+                OnPropertyChanged("SelectedDiscount");
+            }
+        }
         private PlateViewModel _selectedPlate;
         public PlateViewModel SelectedPlate
         {
@@ -81,6 +94,28 @@ namespace MusicShop.ViewModels
             set
             {
                 _selectedPlate = value;
+                var sales = rep.SaleRepository.GetAllSalesByPlateId(_selectedPlate.Id);
+                if (sales != null)
+                {
+                    Sales.Clear();
+                    int i = 0;
+                    foreach (var sale in sales)
+                    {
+                        Sales.Add(new SaleViewModel(sale));
+                        SalesPrice += Sales[i].Price;
+                    }
+                    OnPropertyChanged("Sales");
+                    OnPropertyChanged("SalesPrice");
+                }
+                var discounts = rep.DiscountRepository.GetAllDiscounts().ToList();
+                //var discounts = rep.DiscountRepository.GetAllDiscountsByStartDate(StartDate).ToList();
+                if (discounts != null)
+                {
+                    Discounts.Clear();
+                    foreach (var d in discounts)
+                        Discounts.Add(d);
+                    OnPropertyChanged("Discounts");
+                }
                 OnPropertyChanged("SelectedPlate");
             }
         }
@@ -118,6 +153,52 @@ namespace MusicShop.ViewModels
                 }
             ));
             }
+        }
+        private RelayCommand _addDiscount;
+        public RelayCommand AddDiscount
+        {
+            get
+            {
+                return _addDiscount ?? (new RelayCommand(obj =>
+                {
+                    DatePicker date_def =  (DatePicker)obj;
+                    DateTime startDate = (DateTime)date_def.SelectedDate;
+                    DateTime endDate = startDate.AddDays(30);
+                    if (startDate.Date > DateTime.Now)
+                    {
+                        Discount discount = new Discount()
+                        {
+                            Id = -1,
+                            Comment = "New Discount",
+                            StartDate = startDate,
+                            EndDate = endDate
+                        };
+                        rep.DiscountRepository.AddDiscount(discount);
+                        LoadDiscounts();
+                        OnPropertyChanged("Discounts");
+                    }
+                    else
+                        MessageBox.Show("You input invalid date!");
+                }
+            ));
+            }
+        }
+        public string Comment
+        {
+            get { return SelectedDiscount.Comment; }
+            set { SelectedDiscount.Comment = value; }
+        }
+        private void LoadDiscounts()
+        {
+            var discounts = rep.DiscountRepository.GetAllDiscounts().ToList();
+            if (discounts != null)
+            {
+                Discounts.Clear();
+                foreach (var d in discounts)
+                    Discounts.Add(d);
+                OnPropertyChanged("Discounts");
+            }
+
         }
         private RelayCommand _delPlate;
         public RelayCommand DeletePlate
@@ -265,7 +346,6 @@ namespace MusicShop.ViewModels
                 Plates.Add(new PlateViewModel(plate));
             }
         }
-
         private void LoadPlatesByAuthorIdAndGenreId(int aid, int gid)
         {
             Plates.Clear();
@@ -286,6 +366,7 @@ namespace MusicShop.ViewModels
 
         public ClientViewModel(Account account)
         {
+            Discounts = new ObservableCollection<Discount>();
             Plates = new ObservableCollection<PlateViewModel>();
             Genres = new ObservableCollection<GenreViewModel>();
             Authors = new ObservableCollection<AuthorViewModel>();
@@ -293,6 +374,7 @@ namespace MusicShop.ViewModels
             Account = new AccountViewModel2(account);
             SelectedAccount = Account;
             Publishers = new ObservableCollection<PublisherViewModel>();
+            SelectedAccount = new AccountViewModel2(account);
             LoadGenres();
             LoadAuthors();
             LoadPlates();
@@ -302,6 +384,7 @@ namespace MusicShop.ViewModels
 
         public ClientViewModel()
         {
+            Discounts = new ObservableCollection<Discount>();
             Plates = new ObservableCollection<PlateViewModel>();
             Genres = new ObservableCollection<GenreViewModel>();
             Authors = new ObservableCollection<AuthorViewModel>();
