@@ -17,6 +17,7 @@ namespace MusicShop.Repositories.Implementations
         public void AddDiscount(Discount addedDiscount)
         {
             _modelManager.Discounts.Add(addedDiscount);
+            _modelManager.SaveChanges();
         }
 
         public void ChangeDiscount(Discount changedDiscount)
@@ -39,6 +40,10 @@ namespace MusicShop.Repositories.Implementations
         public IEnumerable<Discount> GetAllDiscountsByEndDate(DateTime endDate)
         {
             return _modelManager.Discounts.Where(d => d.EndDate == endDate).ToList();
+        }
+        public IEnumerable<Discount> GetAllDiscounts()
+        {
+            return _modelManager.Discounts.ToList();
         }
 
         public IEnumerable<Discount> GetAllDiscountsByStartDate(DateTime startDate)

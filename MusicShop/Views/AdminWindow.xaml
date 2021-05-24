@@ -39,11 +39,11 @@
                         <TextBlock DockPanel.Dock="Left" Text="Author:" FontSize="20" Margin="5 0"/>
                         <ComboBox x:Name="authorsList" Margin="5 10" ItemsSource="{Binding cvm.Authors}" DisplayMemberPath="Name" VerticalAlignment="Center"
                               FontSize="20" SelectedItem="{Binding cvm.SelectedAuthor}"/>
-                        
+
                         <TextBlock DockPanel.Dock="Left" Text="Genre:" FontSize="20" Margin="5 0"/>
                         <ComboBox x:Name="genresList" Margin="5 10" ItemsSource="{Binding cvm.Genres}" DisplayMemberPath="Name" VerticalAlignment="Center"
                               FontSize="20" SelectedItem="{Binding cvm.SelectedGenre}"/>
-                        
+
                         <TextBlock DockPanel.Dock="Left" Text="Publisher:" FontSize="20" Margin="5 0"/>
                         <ComboBox x:Name="publishersList" Margin="5 10" ItemsSource="{Binding cvm.Publishers}" DisplayMemberPath="Name" VerticalAlignment="Center"
                               FontSize="20" SelectedItem="{Binding cvm.SelectedPublisher}"/>
@@ -58,27 +58,58 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="116*"/>
-                                    <ColumnDefinition Width="27*"/>
-                                    <ColumnDefinition Width="204*"/>
+                                    <ColumnDefinition Width="134*"/>
+                                    <ColumnDefinition Width="213*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Name:" FontSize="20" Margin="5 0"
                                            Grid.Row="0" Grid.Column="0"/>
 
-                                <TextBox x:Name="plateName"   FontSize="15"  Text="{Binding Name}" Margin="16,7,15,7"
-                                         Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+                                <TextBox x:Name="plateName"   FontSize="15"  Text="{Binding Name}" Margin="5,7,10,7"
+                                         Grid.Row="0" Grid.Column="1" Width="Auto"/>
 
-                                <TextBlock Text="Price:" FontSize="20" VerticalAlignment="Center" Margin="5,10,5,9"
-                                           Grid.Row="3" Grid.Column="0"/>
-                                <TextBox x:Name="platePrice"  Margin="16,7,15,7" FontSize="15" Text="{Binding Cost, StringFormat={}{0:C}}"
-                                         Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+                                <TextBlock Text="Price:" FontSize="20" VerticalAlignment="Bottom" Margin="5,0,5,9"
+                                           Grid.Row="3" Grid.Column="0" Height="27"/>
+                                <TextBox x:Name="platePrice"  Margin="5,7,10,7" FontSize="15" Text="{Binding Cost, StringFormat={}{0:C}}"
+                                         Grid.Row="3" Grid.Column="1" Width="Auto"/>
 
                                 <TextBlock Text="Amount:" FontSize="20" VerticalAlignment="Center" Margin="5,10,5,9"
-                                           Grid.Row="4" Grid.Column="0"/>
-                                <TextBox x:Name="plateAmount"  Margin="16,7,15,7" FontSize="15" Text="{Binding Amount}"
-                                         Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"/>
+                                           Grid.Row="4" Grid.Column="0" Height="27"/>
+                                <TextBox x:Name="plateAmount"  Margin="5,7,10,7" FontSize="15" Text="{Binding Amount}"
+                                         Grid.Row="4" Grid.Column="1" Width="Auto"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="Salеs amount:" FontSize="20" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Height="38" Margin="0,4"/>
+                                <TextBox x:Name="plateSale"  Margin="5,7,10,7" FontSize="15" Text="{Binding cvm.SalesPrice}"
+                                                 Grid.Row="0" Grid.Column="1" Width="Auto"/>
+                                <Label Content="Discounts list:" FontSize="20" Grid.Row="1" Grid.Column="0" Height="38" Margin="0,4"/>
+                                <ComboBox x:Name="discountsList"  Margin="5,7,10,7" FontSize="15" ItemsSource="{Binding cvm.Discounts}"
+                                                 Grid.Row="1" Grid.Column="1"  Width="Auto" DisplayMemberPath="Comment" SelectedIndex="{Binding cvm.index}"
+                                          SelectedItem="{Binding SelectedDiscount}"/>
+                                <Label Content="Start date:" FontSize="20" Grid.Row="2" Grid.Column="0" Height="38" Margin="5,7,10,7"/>
+                                <DatePicker Grid.Row="2" Grid.Column="1" x:Name="StartDate" Margin="5,7,10,7" />
+
+                                <Label Content="Selected discount:" FontSize="20" Grid.Row="3" Grid.Column="0" Height="38" Margin="0,4"/>
+                                <TextBox x:Name="selectedDiscount"  Margin="5,7,10,7" FontSize="15" Text="{Binding cvm.Comment}"
+                                                 Grid.Row="3" Grid.Column="1" Width="Auto"/>
+                                
+                                <Button x:Name="addDiscount" Content="Add/Save discount" Style="{DynamicResource RoundButtonTemplate}" Grid.Row="4" Grid.ColumnSpan="2"
+                                    Command="{Binding cvm.AddDiscount}" CommandParameter="{Binding ElementName=StartDate}"/>
                             </Grid>
                         </GroupBox>
                     </StackPanel>
@@ -121,7 +152,14 @@
                     </ScrollViewer>
                 </GroupBox>
                 <GroupBox Grid.Column="2">
-                    <Label x:Name="adminNameLabel" Content="{Binding accountvm.Login}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Welcome," FontSize="24" />
+                        <TextBox x:Name="adminName" Text="{Binding accountvm.Login}" IsReadOnly="True" Grid.Column="1" FontSize="24" Margin="0,5,20,5" Width="Auto"/>
+                    </Grid>
                 </GroupBox>
                 <DockPanel Grid.Column="2" Grid.Row="1" VerticalAlignment="Top">
                     <Button x:Name="addPlate" Content="Add plate" Style="{DynamicResource RoundButtonTemplate}" DockPanel.Dock="Top"

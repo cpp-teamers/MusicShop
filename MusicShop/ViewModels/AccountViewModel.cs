@@ -262,7 +262,7 @@ namespace MusicShop.ViewModels
                                 break;
                             case (int)Role_Id.Admin:
                                 MessageBox.Show($"Welcome {entryRole.Name}!", "Admin", MessageBoxButton.OK, MessageBoxImage.Information);
-                                winToShow = new AdminWindow();
+                                winToShow = new AdminWindow(accountByLogin);
                                 break;
                             default:
                                 throw new System.Exception("Cannot proccess user with invalid role! Please add such role.");

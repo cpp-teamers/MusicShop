@@ -21,10 +21,10 @@ namespace MusicShop.Views
 	/// </summary>
 	public partial class AdminWindow : Window
 	{
-		public AdminWindow()
+		public AdminWindow(Account account)
 		{
 			InitializeComponent();
-			this.DataContext = new AdminViewModel();
+			this.DataContext = new AdminViewModel(account);
 		}
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -34,6 +34,9 @@ namespace MusicShop.Views
 				genresList.SelectedIndex = 0;
 			if (publishersList.Items.Count > 0)
 				publishersList.SelectedIndex = 0;
-        }
+			if (discountsList.SelectedIndex > 0)
+				discountsList.SelectedIndex = 0;
+
+		}
 	}
 }
